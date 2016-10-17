@@ -1,42 +1,57 @@
 package com.company;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Scanner;
+import java.sql.*;
 
 /**
  * Created by yulia on 02.10.16.
  */
 public class DatabaseList {
+    ConsoleReader consoleReader = new ConsoleReader();
+    String[] strArr;
 
-
-    public static void viewAllUsersTables(String database, Connection connection) throws SQLException {
+    public String[] viewAllUsersTables(String database, Connection connection) throws SQLException {
 
         ResultSet list = connection.getMetaData().getTables(database, "public", "%", null);
         System.out.printf("List of all available tables: [");
+        String arrOfTableNames = "";
 
         while (list.next()) {
+
             String tableName = list.getString(3);
+
+            arrOfTableNames =  tableName  + " " + arrOfTableNames;
+
             System.out.print(tableName);
-            if(list.isLast()){
+            if (list.isLast()){
                 System.out.print("]");
             }
             else {
                 System.out.print(", ");
             }
         }
+
+        strArr = arrOfTableNames.split(" ") ;
+        return strArr;
     }
 
-    public static void equalCommand(String database, Connection connection) throws SQLException {
-        Scanner sc = new Scanner(System.in);
-        String input = sc.next();
-        if(input.equals("list")){
-            viewAllUsersTables(database, connection);
+
+
+//    public int getColumnsNumber(String database, Connection connection, String[] strArr) throws SQLException {
+//        PreparedStatement ps = connection.prepareStatement("select * from public." + contentsOfTheTables.getNameOfSelectedDatabase(database, connection, strArr));
+//        ResultSet rs = ps.executeQuery();
+//        ResultSetMetaData rsmd = rs.getMetaData();
+//        return rsmd.;
+//    }
+
+    public boolean equalCommand(String database, Connection connection) throws SQLException {
+        boolean result = false;
+        if(consoleReader.read().equals("list")){
+            result = true;
         }
         else {
             System.out.println("Unfortunately, this command does not exist. Please, try again");
             equalCommand(database,connection);
         }
+        return result;
     }
 }

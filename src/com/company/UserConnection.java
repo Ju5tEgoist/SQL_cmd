@@ -22,7 +22,7 @@ public class UserConnection {
                     case 2: wrongStatement = "password";
                         break;
                 }
-                System.out.println("Sorry, but you input incorrect data in " + wrongStatement + ". Please, try again enter " + wrongStatement);
+                System.out.println("Sorry, but you entered incorrect data in " + wrongStatement + ". Please, try again enter " + wrongStatement);
                 Scanner sc = new Scanner(System.in);
                 arrUserInput[i] = sc.next();
                 compareDataConnection();
@@ -32,10 +32,9 @@ public class UserConnection {
     }
 
     public String[] welcomeFromDatabase() {
-        System.out.println("Hi, I'm Database manager! Please, wright name of database in which you want to work, username and password in format: nameOfDataBase|username|password ");
-        Scanner sc = new Scanner(System.in);
-        String input = sc.next();
-        String[] strArr = input.split("|") ;
+        System.out.println("Hi, I'm Database manager! Please, write name of database in which you want to work, username and password in format: nameOfDataBase|username|password ");
+        ConsoleReader consoleReader = new ConsoleReader();
+        String[] strArr = consoleReader.read().split("|") ;
         int k = 0;
         for (int i = 0; i < strArr.length; i++) {
 
