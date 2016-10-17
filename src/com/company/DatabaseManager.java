@@ -1,7 +1,6 @@
 package com.company;
 
 import java.sql.*;
-import java.util.Random;
 
 /**
  * Created by yulia on 28.09.16.
@@ -51,9 +50,7 @@ public class DatabaseManager {
         System.out.println("If you want review all user's tables, please, enter command 'list'");
         DatabaseList databaseList = new DatabaseList();
         databaseList.equalCommand(database, connection);
-        String[] tables = databaseList.viewAllUsersTables(database, connection);
-        String nameOfSelectedDatabase = contentsOfTheTables.getNameOfSelectedDatabase(database, connection, tables);
-        contentsOfTheTables.getTableForView( nameOfSelectedDatabase, connection, database);
+        contentsOfTheTables.getTableForView( connection, database);
 
 
 

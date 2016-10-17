@@ -6,21 +6,19 @@ import java.sql.*;
  * Created by yulia on 02.10.16.
  */
 public class DatabaseList {
-    ConsoleReader consoleReader = new ConsoleReader();
-    String[] strArr;
 
-    public String[] viewAllUsersTables(String database, Connection connection) throws SQLException {
+    ConsoleReader consoleReader = new ConsoleReader();
+    String[] tableNames;
+
+    public String[] getAllTableNames(String database, Connection connection) throws SQLException {
 
         ResultSet list = connection.getMetaData().getTables(database, "public", "%", null);
         System.out.printf("List of all available tables: [");
-        String arrOfTableNames = "";
+        String concatenatedTableNames = "";
 
         while (list.next()) {
-
             String tableName = list.getString(3);
-
-            arrOfTableNames =  tableName  + " " + arrOfTableNames;
-
+            concatenatedTableNames =  tableName  + " " + concatenatedTableNames;
             System.out.print(tableName);
             if (list.isLast()){
                 System.out.print("]");
@@ -29,21 +27,12 @@ public class DatabaseList {
                 System.out.print(", ");
             }
         }
-
-        strArr = arrOfTableNames.split(" ") ;
-        return strArr;
+        tableNames = concatenatedTableNames.split(" ") ;
+        return tableNames;
     }
 
-
-
-//    public int getColumnsNumber(String database, Connection connection, String[] strArr) throws SQLException {
-//        PreparedStatement ps = connection.prepareStatement("select * from public." + contentsOfTheTables.getNameOfSelectedDatabase(database, connection, strArr));
-//        ResultSet rs = ps.executeQuery();
-//        ResultSetMetaData rsmd = rs.getMetaData();
-//        return rsmd.;
-//    }
-
     public boolean equalCommand(String database, Connection connection) throws SQLException {
+
         boolean result = false;
         if(consoleReader.read().equals("list")){
             result = true;

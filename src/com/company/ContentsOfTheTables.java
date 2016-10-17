@@ -1,7 +1,5 @@
 package com.company;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-
 import java.sql.*;
 import java.util.Scanner;
 
@@ -9,32 +7,24 @@ import java.util.Scanner;
  * Created by yulia on 04.10.16.
  */
 public class ContentsOfTheTables implements ConsoleManager{
-    ConsoleReader consoleReader = new ConsoleReader();
     DatabaseList dl = new DatabaseList();
 
 
-    public void getTableForView(String nameOfSelectedDatabase, Connection connection, String database) throws SQLException {
-//        ResultSet list = connection.getMetaData().getTables(database, "public", nameOfSelectedDatabase, null);
-//
-        PreparedStatement ps = connection.prepareStatement("select * from public." + getNameOfSelectedDatabase(database, connection, dl.viewAllUsersTables(database, connection)));
-//
+    public void getTableForView( Connection connection, String database) throws SQLException {
+
+        String chosenTableName = getChosenTableName(dl.getAllTableNames(database, connection));
+        PreparedStatement ps = connection.prepareStatement("select * from public." + chosenTableName);
         ResultSet rs = ps.executeQuery();
-        ResultSetMetaData rsmd = rs.getMetaData();
-//
-//        System.out.println(rs.getRow());
-        //return rsmd.;
-        int columns = rsmd.getColumnCount();
-        for (int i = 1; i <= columns; i++) {
-            int jdbcType = rsmd.getColumnType(i);
-            String name = rsmd.getColumnTypeName(i);
-            System.out.print("Column " + i + " is JDBC type " + jdbcType);
-            System.out.println(", which the DBMS calls " + name);
-
-
+        while (rs.next()) {
+            int columnCount = ps.getMetaData().getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                System.out.print(rs.getString(i) + "|");
+            }
+            System.out.print("\n");
         }
     }
 
-   // DatabaseList databaseList = new DatabaseList();
+
    @Override
    public String read() {
        Scanner sc = new Scanner(System.in);
@@ -42,47 +32,22 @@ public class ContentsOfTheTables implements ConsoleManager{
        return input;
    }
 
-    public String getNameOfSelectedDatabase(String database, Connection connection, String[] strArr) throws SQLException {
-        String nameOfSelectedDatabase = "";
-        System.out.println("For view table, please, enter the name: find <tableName>");
+    public String getChosenTableName(String[] tableNames) throws SQLException {
+        String selectedTableName = "";
+        System.out.println("\nFor view table, please, enter the name: find <tableName>");
         String result = read();
-        for (String aStrArr : strArr) {
-            String expected = "find" + " " + aStrArr;
+        for (String tableName : tableNames) {
+            String expected = "find" + " " + tableName;
             if (result.equals(expected)) {
-                nameOfSelectedDatabase = aStrArr;
+                selectedTableName = tableName;
               break;
             }
         }
-         if(nameOfSelectedDatabase.equals("")){
+         if(selectedTableName.equals("")){
             System.out.println("Can not find table with this name. Try again");
-            getNameOfSelectedDatabase(database, connection, strArr);
+            getChosenTableName(tableNames);
         }
-        System.out.println(nameOfSelectedDatabase);
-        return nameOfSelectedDatabase;
-    }
-
-
-
-    // fix it, because this realization depends on specific database
-    public static void getTableForViewUser(ResultSet rs) throws SQLException {
-        System.out.println( "name  " + "password  " + "id");
-        while ( rs.next() ) {
-            String  name = rs.getString("name");
-            String  password = rs.getString("password");
-            int id = rs.getInt("id");
-            System.out.println( name + "  " + password + "  " + id + "\n"
-                    + "--------------" );
-
-        }
-    }
-    // fix it, because this realization depends on specific database
-    public static void getTableForViewEmployee(ResultSet rs) throws SQLException {
-        while ( rs.next() ) {
-            String  name = rs.getString("name");
-            String  password = rs.getString("position");
-
-            System.out.println( "name = " + name + "\n" + "password = " + password + "\n" + "--------------" );
-
-        }
+        System.out.println(selectedTableName);
+        return selectedTableName;
     }
 }
