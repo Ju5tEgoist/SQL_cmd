@@ -31,7 +31,7 @@ public class DatabaseList {
         return tableNames;
     }
 
-    public boolean equalCommand(String database, Connection connection) throws SQLException {
+    public boolean equalCommand() throws SQLException {
 
         boolean result = false;
         if(consoleReader.read().equals("list")){
@@ -39,7 +39,7 @@ public class DatabaseList {
         }
         else {
             System.out.println("Unfortunately, this command does not exist. Please, try again");
-            equalCommand(database,connection);
+            equalCommand();
         }
         return result;
     }
