@@ -6,7 +6,7 @@ import java.util.Scanner;
 /**
  * Created by yulia on 04.10.16.
  */
-public class ContentsOfTheTables implements ConsoleManager{
+public class ContentsOfTheTables{
     DatabaseList dl = new DatabaseList();
 
 
@@ -25,17 +25,12 @@ public class ContentsOfTheTables implements ConsoleManager{
     }
 
 
-   @Override
-   public String read() {
-       Scanner sc = new Scanner(System.in);
-       String input = sc.nextLine();
-       return input;
-   }
 
     public String getChosenTableName(String[] tableNames) throws SQLException {
         String selectedTableName = "";
+        ConsoleReader consoleReader = new ConsoleReader();
         System.out.println("\nFor view table, please, enter the name: find <tableName>");
-        String result = read();
+        String result = consoleReader.read();
         for (String tableName : tableNames) {
             String expected = "find" + " " + tableName;
             if (result.equals(expected)) {

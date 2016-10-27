@@ -7,37 +7,37 @@ import java.sql.*;
  */
 public class DatabaseManager {
     private static ConsoleReader consoleReader;
-    static Connection connection;
     static String database;
+    Connection connection;
 
 
-
-    public void connect(String database, String user, String password) throws SQLException, ClassNotFoundException {
+    public Connection connect(String database, String user, String password) throws SQLException, ClassNotFoundException {
             try {
                 Class.forName("org.postgresql.Driver");
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException("Please add jdbc jar to project.", e);
             }
             try {
-                connection = DriverManager.getConnection(
+                 connection = DriverManager.getConnection(
                         "jdbc:postgresql://localhost:5432/" + database, user,
                         password);
             } catch (SQLException e) {
-                connection = null;
                 throw new RuntimeException(
-                        String.format("Cant get connection for model:%s user:%s",
+                        String.format("Can't get connection for model:%s user:%s",
                                 database, user),
                         e);
+
             }
+        System.out.println("Connection successful");
+        return connection;
     }
 
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        UserConnection userConnection = new UserConnection(consoleReader);
+        UserConnection userConnection = new UserConnection();
         ContentsOfTheTables contentsOfTheTables = new ContentsOfTheTables();
-        if( userConnection.welcomeFromDatabase()){
-            System.out.println("Connection successfully");
-        }
+         userConnection.welcomeDatabase();
+
 //
 //        //insert
 //        String sql = "INSERT INTO public.user " + "VALUES('Rick', '999080', 9)";
@@ -61,8 +61,7 @@ public class DatabaseManager {
         System.out.println("If you want review all user's tables, please, enter command 'list'");
         DatabaseList databaseList = new DatabaseList();
         databaseList.equalCommand();
-//        DatabaseManager db = new DatabaseManager(connection, database);
-        contentsOfTheTables.getTableForView(connection, database);
+//        contentsOfTheTables.getTableForView(c, database);
 
 
 

@@ -9,7 +9,7 @@ public class ConsoleReader implements ConsoleManager {
     @Override
     public String read() {
         Scanner sc = new Scanner(System.in);
-        String input = sc.next();
+        String input = sc.nextLine();
         return input;
     }
 }
