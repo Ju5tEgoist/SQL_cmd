@@ -7,9 +7,10 @@ import java.sql.*;
  */
 public class DatabaseManager {
     private static ConsoleReader consoleReader;
-    static String database;
-    Connection connection;
-
+//     String database;
+      Connection connection;
+//    public DatabaseManager(){}
+//    public DatabaseManager(Connection connection){ this.connection = connection; }
 
     public Connection connect(String database, String user, String password) throws SQLException, ClassNotFoundException {
             try {
@@ -18,7 +19,7 @@ public class DatabaseManager {
                 throw new RuntimeException("Please add jdbc jar to project.", e);
             }
             try {
-                 connection = DriverManager.getConnection(
+                  connection = DriverManager.getConnection(
                         "jdbc:postgresql://localhost:5432/" + database, user,
                         password);
             } catch (SQLException e) {
@@ -33,44 +34,18 @@ public class DatabaseManager {
     }
 
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        UserConnection userConnection = new UserConnection();
-        ContentsOfTheTables contentsOfTheTables = new ContentsOfTheTables();
-         userConnection.welcomeDatabase();
-
-//
-//        //insert
-//        String sql = "INSERT INTO public.user " + "VALUES('Rick', '999080', 9)";
-//        stmt.executeUpdate(sql);
-//
-//        //select
-//        rs = stmt.executeQuery( "SELECT * FROM public.user;" );
-//
-//
-//        //update
-//        PreparedStatement ps = connection.prepareStatement("UPDATE public.user SET name = ?  WHERE id = 9");
-//        // set the preparedstatement parameters
-//        ps.setString(1, "name_" + new Random(47).nextInt());
-//        ps.executeUpdate();
-//
-//        //delete
-//        sql = "DELETE from public.user where id = 9;";
-//        stmt.executeUpdate(sql);
-//        rs = stmt.executeQuery( "SELECT * FROM public.user;" );
-//
-        System.out.println("If you want review all user's tables, please, enter command 'list'");
-        DatabaseList databaseList = new DatabaseList();
-        databaseList.equalCommand();
-//        contentsOfTheTables.getTableForView(c, database);
-
-
-
-//
-//        rs.close();
-//        stmt.close();
-//        connection.close();
-
-
+    public Connection getConnection(){
+    DatabaseManager databaseManager = new DatabaseManager();
+      //  System.out.println(databaseManager.connection);
+    return   databaseManager.connection;
     }
+//    public Connection getConnection(){
+//        return this.connection;
+//    }
+//    public String getDatabase(){
+//        return this.database;
+//    }
+
+
 
 }

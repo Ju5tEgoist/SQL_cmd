@@ -5,12 +5,18 @@ import java.sql.*;
 /**
  * Created by yulia on 02.10.16.
  */
-public class DatabaseList {
+public class DatabaseList implements TableList{
+
+    Connection connection;
+    DatabaseList(Connection connection){
+        this.connection = connection;
+    }
+    ContentsOfTheTables contentsOfTheTables = new ContentsOfTheTables();
 
     ConsoleReader consoleReader = new ConsoleReader();
     String[] tableNames;
 
-    public String[] getAllTableNames(String database, Connection connection) throws SQLException {
+    public String[] getAllTableNames(String database) throws SQLException {
 
         ResultSet list = connection.getMetaData().getTables(database, "public", "%", null);
         System.out.printf("List of all available tables: [");
@@ -30,17 +36,17 @@ public class DatabaseList {
         tableNames = concatenatedTableNames.split(" ") ;
         return tableNames;
     }
+    public void getTableForView(String database) throws SQLException {
 
-    public boolean equalCommand() throws SQLException {
-
-        boolean result = false;
-        if(consoleReader.read().equals("list")){
-            result = true;
+        String chosenTableName = contentsOfTheTables.getChosenTableName(getAllTableNames(database));
+        PreparedStatement ps = connection.prepareStatement("select * from public." + chosenTableName);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int columnCount = ps.getMetaData().getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                System.out.print(rs.getString(i) + "|");
+            }
+            System.out.print("\n");
         }
-        else {
-            System.out.println("Unfortunately, this command does not exist. Please, try again");
-            equalCommand();
-        }
-        return result;
     }
 }

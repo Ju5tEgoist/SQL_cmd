@@ -1,29 +1,11 @@
 package com.company;
 
 import java.sql.*;
-import java.util.Scanner;
 
 /**
  * Created by yulia on 04.10.16.
  */
 public class ContentsOfTheTables{
-    DatabaseList dl = new DatabaseList();
-
-
-    public void getTableForView( Connection connection, String database) throws SQLException {
-
-        String chosenTableName = getChosenTableName(dl.getAllTableNames(database, connection));
-        PreparedStatement ps = connection.prepareStatement("select * from public." + chosenTableName);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            int columnCount = ps.getMetaData().getColumnCount();
-            for (int i = 1; i <= columnCount; i++) {
-                System.out.print(rs.getString(i) + "|");
-            }
-            System.out.print("\n");
-        }
-    }
-
 
 
     public String getChosenTableName(String[] tableNames) throws SQLException {
