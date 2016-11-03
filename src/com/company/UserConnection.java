@@ -18,7 +18,6 @@ public class UserConnection implements ConsoleManager {
         this.consoleReader = new ConsoleReader();
         this.databaseManager = new DatabaseManager();
         this.contentsOfTheTables = new ContentsOfTheTables();
-      //  this.tableList = tableList;
     }
 
     public Connection getConnectionData() {
@@ -66,9 +65,6 @@ public class UserConnection implements ConsoleManager {
         }
         return result;
     }
-
-
-
 
     @Override
     public String read() {

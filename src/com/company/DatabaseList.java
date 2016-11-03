@@ -13,7 +13,6 @@ public class DatabaseList implements TableList{
     }
     ContentsOfTheTables contentsOfTheTables = new ContentsOfTheTables();
 
-    ConsoleReader consoleReader = new ConsoleReader();
     String[] tableNames;
 
     public String[] getAllTableNames(String database) throws SQLException {
@@ -39,14 +38,26 @@ public class DatabaseList implements TableList{
     public void getTableForView(String database) throws SQLException {
 
         String chosenTableName = contentsOfTheTables.getChosenTableName(getAllTableNames(database));
-        PreparedStatement ps = connection.prepareStatement("select * from public." + chosenTableName);
+        PreparedStatement ps;
+
+        if(contentsOfTheTables.getLimit() != 0 && contentsOfTheTables.getOffset() != 0){
+            String s = "SELECT * FROM public." + chosenTableName + " " + "LIMIT " + contentsOfTheTables.getLimit() + " " +  "OFFSET" + " " + contentsOfTheTables.getOffset();
+            ps = connection.prepareStatement(s);
+        }
+        else {
+            ps = connection.prepareStatement("select * from public." + chosenTableName);
+        }
+
         ResultSet rs = ps.executeQuery();
+        int columnCount = ps.getMetaData().getColumnCount();
+
         while (rs.next()) {
-            int columnCount = ps.getMetaData().getColumnCount();
             for (int i = 1; i <= columnCount; i++) {
                 System.out.print(rs.getString(i) + "|");
             }
             System.out.print("\n");
         }
+        ChangeTable changeTable = new ChangeTable(connection, contentsOfTheTables);
+        changeTable.defineData(chosenTableName);
     }
 }

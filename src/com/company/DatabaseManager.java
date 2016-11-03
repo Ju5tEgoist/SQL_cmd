@@ -6,11 +6,7 @@ import java.sql.*;
  * Created by yulia on 28.09.16.
  */
 public class DatabaseManager {
-    private static ConsoleReader consoleReader;
-//     String database;
       Connection connection;
-//    public DatabaseManager(){}
-//    public DatabaseManager(Connection connection){ this.connection = connection; }
 
     public Connection connect(String database, String user, String password) throws SQLException, ClassNotFoundException {
             try {
@@ -22,6 +18,9 @@ public class DatabaseManager {
                   connection = DriverManager.getConnection(
                         "jdbc:postgresql://localhost:5432/" + database, user,
                         password);
+//                Statement statement = connection.createStatement();
+//                String sql = "INSERT INTO public.user " + "VALUES('Ross', '5280', 3)";
+//                statement.executeUpdate(sql);
             } catch (SQLException e) {
                 throw new RuntimeException(
                         String.format("Can't get connection for model:%s user:%s",
@@ -32,20 +31,5 @@ public class DatabaseManager {
         System.out.println("Connection successful");
         return connection;
     }
-
-
-    public Connection getConnection(){
-    DatabaseManager databaseManager = new DatabaseManager();
-      //  System.out.println(databaseManager.connection);
-    return   databaseManager.connection;
-    }
-//    public Connection getConnection(){
-//        return this.connection;
-//    }
-//    public String getDatabase(){
-//        return this.database;
-//    }
-
-
 
 }
