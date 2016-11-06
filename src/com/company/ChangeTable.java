@@ -7,49 +7,11 @@ import java.sql.*;
  */
 public class ChangeTable {
     ConsoleReader consoleReader = new ConsoleReader();
-    private int columnNumber;
-    private int rowNumber;
     Connection connection;
     ContentsOfTheTables contentsOfTheTables;
-    ChangeTable(Connection connection, ContentsOfTheTables contentsOfTheTables){
+    public ChangeTable(Connection connection, ContentsOfTheTables contentsOfTheTables){
         this.connection = connection;
         this.contentsOfTheTables = contentsOfTheTables;
-    }
-
-
-    public void defineData(String chosenTableName) throws SQLException {
-        System.out.println("To change data in table enter column's and row's numbers in format: change <columnNumber|rowNumber>");
-        String resultString = consoleReader.read();
-        String[] parts = resultString.split(" ");
-
-        if (parts.length == 2) {
-            String[] partsCR = parts[parts.length - 1].split("\\|");
-            String limitString = partsCR[0];
-            String offsetString = partsCR[1];
-            columnNumber = Integer.parseInt(limitString);
-            rowNumber = Integer.parseInt(offsetString);
-            int offset = contentsOfTheTables.getOffset();
-            if(offset != 0){
-                rowNumber = rowNumber + offset;
-            }
-        }
-        else {
-            System.out.println("This command does not exist. Try again");
-            defineData(chosenTableName);
-        }
-
-        Statement st = connection.createStatement();
-        String result = "";
-        ResultSet rs = st.executeQuery("SELECT * FROM public." + chosenTableName);
-        int i = 1;
-        while (rs.next()){
-            if(i <= rowNumber){
-                result = rs.getString(columnNumber);
-                i++;
-            }
-        }
-        System.out.println("The data which you want to change: " + result);
-        changeData(result, st, chosenTableName);
     }
 
     public void changeData( String result, Statement st, String chosenTableName) throws SQLException {
@@ -72,10 +34,6 @@ public class ChangeTable {
             System.out.println(fail);
             changeData(result, st, chosenTableName);
         }
-
-//        rs.close();
-//        stmt.close();
-//        connection.close();
     }
 
     private void update(Statement st, String chosenTableName, String result) throws SQLException {
@@ -89,7 +47,7 @@ public class ChangeTable {
     }
 
     private void select(Statement st, String chosenTableName, String result) throws SQLException {
-               st.executeQuery( "SELECT * FROM public." + chosenTableName + " VALUE " + result  );
+        st.executeQuery( "SELECT * FROM public." + chosenTableName + " VALUE " + result  );
     }
 
     private void insert(Statement st, String chosenTableName, String result) throws SQLException {

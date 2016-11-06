@@ -18,9 +18,6 @@ public class DatabaseManager {
                   connection = DriverManager.getConnection(
                         "jdbc:postgresql://localhost:5432/" + database, user,
                         password);
-//                Statement statement = connection.createStatement();
-//                String sql = "INSERT INTO public.user " + "VALUES('Ross', '5280', 3)";
-//                statement.executeUpdate(sql);
             } catch (SQLException e) {
                 throw new RuntimeException(
                         String.format("Can't get connection for model:%s user:%s",
