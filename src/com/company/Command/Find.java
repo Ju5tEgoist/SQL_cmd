@@ -2,30 +2,24 @@ package com.company.Command;
 
 import com.company.ConsoleReader;
 import com.company.ContentsOfTheTables;
-import com.company.DatabaseList;
-
 import java.sql.Connection;
 
 /**
  * Created by yulia on 06.11.16.
  */
 public class Find implements Command {
-    String chosenTableName;
     ContentsOfTheTables contentsOfTheTables;
-    DatabaseList databaseList;
-    Connection connection;
+   // DatabaseList databaseList;
     List list;
-    String database;
-    public Find(String chosenTableName, String database) {
-        this.chosenTableName = chosenTableName;
-        this.contentsOfTheTables = new ContentsOfTheTables();
-        this.databaseList = new DatabaseList(connection);
-        this.database = database;
-        this.list = new List(connection, database);
-    }
+
+//    public Find(Connection connection, String database, Connect conn) {
+//        this.contentsOfTheTables = new ContentsOfTheTables();
+//        this.databaseList = new DatabaseList(connection);
+//        this.list = new List();
+//    }
 
     @Override
-    public boolean isProcess(String command) {
+    public boolean shouldProcess(String command) {
         return command.startsWith("find");
     }
 
@@ -49,7 +43,7 @@ public class Find implements Command {
         selectedTableName = contentsOfTheTables.getLimitOffset(tableNames, selectedTableName, result, parts);
         if(selectedTableName.equals("")){
             System.out.println("Can not find table with this name. Try again");
-            isProcess(command);
+            shouldProcess(command);
         }
         System.out.println(selectedTableName);
     }

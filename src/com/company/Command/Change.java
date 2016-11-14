@@ -3,6 +3,7 @@ package com.company.Command;
 import com.company.ChangeTable;
 import com.company.ConsoleReader;
 import com.company.ContentsOfTheTables;
+import com.company.DatabaseManager;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,17 +17,15 @@ public class Change implements Command {
     ConsoleReader consoleReader = new ConsoleReader();
     private int columnNumber;
     private int rowNumber;
-    Connection connection;
     ContentsOfTheTables contentsOfTheTables;
     ChangeTable changeTable;
-    Change(Connection connection, ContentsOfTheTables contentsOfTheTables){
-        this.connection = connection;
+    Change(ContentsOfTheTables contentsOfTheTables){
         this.contentsOfTheTables = contentsOfTheTables;
-        this.changeTable = new ChangeTable(connection, contentsOfTheTables);
+   //     this.changeTable = new ChangeTable(connection, contentsOfTheTables);
     }
 
     @Override
-    public boolean isProcess(String command) {
+    public boolean shouldProcess(String command) {
         return command.startsWith("change ");
     }
 
@@ -52,6 +51,7 @@ public class Change implements Command {
                 process(chosenTableName);
             }
 
+            Connection connection = DatabaseManager.getConnection();
             Statement st = connection.createStatement();
             String result = "";
             ResultSet rs = st.executeQuery("SELECT * FROM public." + chosenTableName);

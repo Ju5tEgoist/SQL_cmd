@@ -1,6 +1,5 @@
 package com.company;
 
-import java.sql.*;
 
 /**
  * Created by yulia on 04.10.16.
@@ -10,7 +9,6 @@ public class ContentsOfTheTables{
     private int limit;
     private int offset;
     private String selectedTableName;
-
     public String getSelectedTableName(){
         return selectedTableName;
     }

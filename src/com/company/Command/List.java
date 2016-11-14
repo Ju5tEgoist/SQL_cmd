@@ -1,5 +1,7 @@
 package com.company.Command;
 
+import com.company.DatabaseManager;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,25 +10,19 @@ import java.sql.SQLException;
  * Created by yulia on 06.11.16.
  */
 public class List implements Command {
-    Connection connection;
-    String database;
-    List(Connection connection, String database){
-        this.connection = connection;
-        this.database = database;
-    }
 
+    DatabaseManager databaseManager = new DatabaseManager();
     private String[] tableNames;
 
-
-
     @Override
-    public boolean isProcess(String command) {
+    public boolean shouldProcess(String command) {
         return command.equals("list");
     }
 
     @Override
-    public void process(String command) throws SQLException {
-        ResultSet list = connection.getMetaData().getTables(database, "public", "%", null);
+    public void process(String database) throws SQLException, ClassNotFoundException {
+        Connection connect = databaseManager.getConnection();
+        ResultSet list = connect.getMetaData().getTables(database, "public", "%", null);
         System.out.printf("List of all available tables: [");
         String concatenatedTableNames = "";
 
@@ -34,12 +30,7 @@ public class List implements Command {
             String tableName = list.getString(3);
             concatenatedTableNames =  tableName  + " " + concatenatedTableNames;
             System.out.print(tableName);
-            if (list.isLast()){
-                System.out.print("]");
-            }
-            else {
-                System.out.print(", ");
-            }
+            System.out.print(list.isLast() ? "]" : ", ");
         }
         tableNames = concatenatedTableNames.split(" ") ;
     }
