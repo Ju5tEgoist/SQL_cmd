@@ -30,7 +30,7 @@ public class Change implements Command {
     }
 
     @Override
-    public void process(String chosenTableName) throws SQLException {
+    public void process(String selectedTableName) throws SQLException {
             System.out.println("To change data in table enter column's and row's numbers in format: change <columnNumber|rowNumber>");
             String resultString = consoleReader.read();
             String[] parts = resultString.split(" ");
@@ -48,13 +48,13 @@ public class Change implements Command {
             }
             else {
                 System.out.println("This command does not exist. Try again");
-                process(chosenTableName);
+                process(selectedTableName);
             }
 
             Connection connection = DatabaseManager.getConnection();
             Statement st = connection.createStatement();
             String result = "";
-            ResultSet rs = st.executeQuery("SELECT * FROM public." + chosenTableName);
+            ResultSet rs = st.executeQuery("SELECT * FROM public." + selectedTableName);
             int i = 1;
             while (rs.next()){
                 if(i <= rowNumber){
@@ -63,7 +63,7 @@ public class Change implements Command {
                 }
             }
             System.out.println("The data which you want to change: " + result);
-            changeTable.changeData(result, st, chosenTableName);
+            changeTable.changeData(result, st, selectedTableName);
         }
     }
 

@@ -21,20 +21,25 @@ public class List implements Command {
 
     @Override
     public void process(String database) throws SQLException, ClassNotFoundException {
-        Connection connect = databaseManager.getConnection();
+        Connection connect = DatabaseManager.getConnection();
         ResultSet list = connect.getMetaData().getTables(database, "public", "%", null);
         System.out.printf("List of all available tables: [");
-        String concatenatedTableNames = "";
-
         while (list.next()) {
             String tableName = list.getString(3);
-            concatenatedTableNames =  tableName  + " " + concatenatedTableNames;
             System.out.print(tableName);
             System.out.print(list.isLast() ? "]" : ", ");
         }
-        tableNames = concatenatedTableNames.split(" ") ;
     }
-    public String[] getTableNames(){
+    public String[] getTableNames(String database) throws SQLException {
+        String concatenatedTableNames = "";
+        Connection connect = DatabaseManager.getConnection();
+        ResultSet list = connect.getMetaData().getTables(database, "public", "%", null);
+        while (list.next()) {
+            String tableName = list.getString(3);
+            concatenatedTableNames =  tableName  + " " + concatenatedTableNames;
+        }
+        tableNames = concatenatedTableNames.split(" ") ;
+
         return tableNames;
     }
 }

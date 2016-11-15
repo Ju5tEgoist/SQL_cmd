@@ -8,10 +8,8 @@ public class ContentsOfTheTables{
 
     private int limit;
     private int offset;
-    private String selectedTableName;
-    public String getSelectedTableName(){
-        return selectedTableName;
-    }
+
+
 
     public String getLimitOffset(String[] tableNames, String selectedTableName, String result, String[] parts) {
         if(parts.length == 3){
@@ -31,9 +29,7 @@ public class ContentsOfTheTables{
         }
         return selectedTableName;
     }
-    protected int getLimit(){
-        return limit;
-    }
+    protected int getLimit(){ return limit;}
 
     public int getOffset(){
         return offset;
