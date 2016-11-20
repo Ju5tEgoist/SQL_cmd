@@ -6,12 +6,11 @@ package com.company;
  */
 public class ContentsOfTheTables{
 
-    private int limit;
-    private int offset;
+    static private int limit;
+    static private int offset;
 
-
-
-    public String getLimitOffset(String[] tableNames, String selectedTableName, String result, String[] parts) {
+    public String getLimitOffset(String[] tableNames, String result, String[] parts) {
+        String selectedTableName = null;
         if(parts.length == 3){
             String[] partsLO = parts[parts.length-1].split("/");
             String limitString = partsLO[0];
@@ -29,6 +28,7 @@ public class ContentsOfTheTables{
         }
         return selectedTableName;
     }
+
     protected int getLimit(){ return limit;}
 
     public int getOffset(){

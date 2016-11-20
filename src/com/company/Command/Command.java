@@ -1,6 +1,5 @@
 package com.company.Command;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 /**

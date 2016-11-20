@@ -7,13 +7,9 @@ import java.sql.*;
  */
 public class DatabaseList{
 
-
-
-    ContentsOfTheTables contentsOfTheTables = new ContentsOfTheTables();
-
     public void getTableForView(String selectedTableName) throws SQLException {
+        ContentsOfTheTables contentsOfTheTables = new ContentsOfTheTables();
         Connection connection = DatabaseManager.getConnection();
-       // String chosenTableName = contentsOfTheTables.getSelectedTableName();
         PreparedStatement ps;
 
         if(contentsOfTheTables.getLimit() != 0 && contentsOfTheTables.getOffset() != 0){

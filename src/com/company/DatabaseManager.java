@@ -7,7 +7,6 @@ import java.sql.*;
  */
 public class DatabaseManager {
      static Connection connection;
-    private DatabaseList tableList;
 
     private static Connection connect(String database, String user, String password) throws SQLException, ClassNotFoundException {
 
@@ -36,7 +35,6 @@ public class DatabaseManager {
     public static Connection getConnection()  {
         if(connection == null) {
             try {
-                String tableList;
                 ConsoleReader consoleReader = new ConsoleReader();
                 String string = consoleReader.read();
                 String[] data = string.split("\\|");
@@ -47,7 +45,6 @@ public class DatabaseManager {
                 String userName = data[1];
                 String password = data[2];
                 connection = connect(database, userName, password);
-           //     tableList = new DatabaseList(connection);
             }
             catch (SQLException | ClassNotFoundException e){
                 System.out.println(e);

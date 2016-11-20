@@ -1,16 +1,12 @@
 package com.company.Command;
 
-import com.company.*;
-
-import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
  * Created by yulia on 08.11.16.
  */
 public class CommandList implements Command{
-    ContentsOfTheTables contentsOfTheTables;
-    Introduction introduction;
+
     public static final String INFO = "All available command: " +
             "\nconnect - connect to database" +
             "\nlist - to review all user's tables" +

@@ -9,8 +9,6 @@ import java.sql.SQLException;
  * Created by yulia on 29.10.16.
  */
 public class Main {
-    Connection connection;
-    ContentsOfTheTables contentsOfTheTables;
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Main main = new Main();

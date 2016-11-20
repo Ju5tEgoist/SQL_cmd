@@ -11,7 +11,6 @@ import java.sql.SQLException;
  */
 public class List implements Command {
 
-    DatabaseManager databaseManager = new DatabaseManager();
     private String[] tableNames;
 
     @Override
