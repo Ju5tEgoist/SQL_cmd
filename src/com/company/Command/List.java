@@ -15,7 +15,7 @@ public class List implements Command {
 
     @Override
     public boolean shouldProcess(String command) {
-        return command.equals("list");
+        return "list".equals(command);
     }
 
     @Override

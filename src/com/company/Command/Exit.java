@@ -10,11 +10,11 @@ public class Exit implements Command {
 
     @Override
     public boolean shouldProcess(String command) {
-        return command.equals("exit");
+        return "exit".equals(command);
     }
 
     @Override
-    public void process(String command) throws SQLException {
-        System.exit(0);
+    public void process(String command){
+        throw new ExitException();
     }
 }

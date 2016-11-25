@@ -17,13 +17,28 @@ public class Introduction {
         this.contentsOfTheTables = new ContentsOfTheTables();
     }
 
-    public void doCommand() throws SQLException, ClassNotFoundException {
-        System.out.println( "To view all available command, enter: command list or enter the command, which you want to do");
-        getDetermineCommand();
+//    public void run(){
+//        try {
+//            doCommand();
+//        }
+//        catch (ExitException e){
+//
+//        }
+//    }
+
+    public void doCommand() {
+       System.out.println( "To view all available command, enter: command list or enter the command, which you want to do");
+
+        try {
+            getDetermineCommand();
+        }
+        catch (Exception e){
+        }
     }
 
-    protected void getDetermineCommand() throws SQLException, ClassNotFoundException {
+    public void getDetermineCommand() throws SQLException, ClassNotFoundException {
         String inputCommand = consoleReader.read();
+
         Command[] commands = {
                 new CommandList(),
                 new Change(),
@@ -33,17 +48,13 @@ public class Introduction {
                 new Exit()
         };
         for (Command command : commands) {
-            try {
-                if (command.shouldProcess(inputCommand)) {
-                    command.process(inputCommand);
-                    break;
-                }
+            if (command.shouldProcess(inputCommand))
+            {
+                command.process(inputCommand);
+                break;
             }
-            catch (Exception e) {
-                throw e;
-            }
-
         }
         getDetermineCommand();
+       // return command;
     }
 }

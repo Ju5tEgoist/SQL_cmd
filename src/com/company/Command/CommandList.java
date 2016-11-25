@@ -21,7 +21,7 @@ public class CommandList implements Command{
 
     @Override
     public boolean shouldProcess(String command) {
-        return command.equals("command list");
+        return "command list".equals(command);
     }
 
     @Override

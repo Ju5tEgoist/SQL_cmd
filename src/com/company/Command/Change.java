@@ -23,7 +23,7 @@ public class Change implements Command {
 
     @Override
     public boolean shouldProcess(String command) {
-        return command.startsWith("change");
+        return command != null && command.startsWith("change");
     }
 
     @Override
@@ -84,6 +84,7 @@ public class Change implements Command {
             if(selectedTableName == null){
                 System.out.println("Try again");
                 isSelectedTableName(database);
+
             }
         }
         return selectedTableName;

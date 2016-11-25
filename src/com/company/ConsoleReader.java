@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -9,7 +10,13 @@ public class ConsoleReader implements ConsoleManager {
     @Override
     public String read() {
         Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine();
+        String input;
+        try {
+            input = sc.nextLine();
+        } catch (NoSuchElementException e)
+        {
+            return null;
+        }
         return input;
     }
 }

@@ -17,7 +17,7 @@ public class Find implements Command {
     public static String selectedTableName;
     @Override
     public boolean shouldProcess(String command) {
-        return command.startsWith("find");
+        return command != null && command.startsWith("find");
     }
 
     @Override

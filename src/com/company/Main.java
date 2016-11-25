@@ -10,17 +10,17 @@ import java.sql.SQLException;
  */
 public class Main {
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        Main main = new Main();
-        main.welcomeDatabase();
+    public static void main(String[] args)  {
+
+            Main main = new Main();
+            main.welcomeDatabase();
+            DatabaseManager databaseManager = new DatabaseManager();
+
     }
 
-    public void welcomeDatabase() throws SQLException, ClassNotFoundException {
+    public void welcomeDatabase()  {
         System.out.println("Hi, I'm Database manager! ");
         Introduction introduction = new Introduction();
-        introduction.doCommand();
-
-
-
+            introduction.doCommand();
     }
 }
