@@ -21,14 +21,20 @@ public class Connect implements Command {
         System.out.println("Please, write name of database in which you want to work, username and password in format: nameOfDataBase|username|password ");
         while (!result) {
             try {
-                Connection connection = DatabaseManager.getConnection();
-                result = connection != null;
+                result = isResult();
             } catch (Exception e) {
                 System.out.println(e.toString());
                 System.out.println("Check your entries and try again");
             }
         }
 
+    }
+
+    public boolean isResult() {
+        Connection connection = DatabaseManager.getConnection();
+        boolean result;
+        result = connection != null;
+        return result;
     }
 
 }

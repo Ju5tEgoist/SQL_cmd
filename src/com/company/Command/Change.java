@@ -50,7 +50,7 @@ public class Change implements Command {
         changeTable.changeData(id, columnNumber);
         }
 
-    private void checkCommand(String selectedTableName, String[] parts) throws SQLException, ClassNotFoundException {
+    public void checkCommand(String selectedTableName, String[] parts) throws SQLException, ClassNotFoundException {
         if (parts.length == 2) {
             String[] partsCR = parts[parts.length - 1].split("\\|");
             String limitString = partsCR[0];
@@ -68,7 +68,7 @@ public class Change implements Command {
         }
     }
 
-    private String isSelectedTableName(String database) throws SQLException, ClassNotFoundException {
+    public String isSelectedTableName(String database) throws SQLException, ClassNotFoundException {
         String selectedTableName = Find.selectedTableName;
         if(selectedTableName == null){
             System.out.println("Before change table, please, enter table name.");

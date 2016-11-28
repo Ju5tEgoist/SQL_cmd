@@ -17,14 +17,6 @@ public class Introduction {
         this.contentsOfTheTables = new ContentsOfTheTables();
     }
 
-//    public void run(){
-//        try {
-//            doCommand();
-//        }
-//        catch (ExitException e){
-//
-//        }
-//    }
 
     public void doCommand() {
        System.out.println( "To view all available command, enter: command list or enter the command, which you want to do");

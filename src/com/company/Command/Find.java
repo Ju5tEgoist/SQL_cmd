@@ -28,6 +28,10 @@ public class Find implements Command {
         String result = consoleReader.read();
         String[] parts = result.split(" ") ;
 
+        selectedTableName = getSelectedTableName(tableNames, result, parts);
+    }
+
+    public String getSelectedTableName(String[] tableNames, String result, String[] parts) throws SQLException {
         for (String tableName : tableNames) {
             String expectedFirstCase = "find" + " " + tableName;
             if (result.equals(expectedFirstCase)) {
@@ -48,7 +52,7 @@ public class Find implements Command {
         else {
             databaseList.getTableForView(selectedTableName);
         }
-
+        return selectedTableName;
     }
 
 }

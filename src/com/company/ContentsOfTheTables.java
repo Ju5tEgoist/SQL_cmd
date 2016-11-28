@@ -29,7 +29,7 @@ public class ContentsOfTheTables{
         return selectedTableName;
     }
 
-    protected int getLimit(){ return limit;}
+    public int getLimit(){ return limit;}
 
     public int getOffset(){
         return offset;
