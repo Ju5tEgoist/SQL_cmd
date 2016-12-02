@@ -1,4 +1,4 @@
-package com.company.Command;
+package com.company.Controller.Command;
 
 import java.sql.SQLException;
 

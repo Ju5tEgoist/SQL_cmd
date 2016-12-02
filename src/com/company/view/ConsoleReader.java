@@ -1,4 +1,6 @@
-package com.company;
+package com.company.view;
+
+import com.company.view.ConsoleManager;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;

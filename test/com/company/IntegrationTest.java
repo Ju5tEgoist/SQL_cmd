@@ -1,8 +1,8 @@
 package com.company;
 
-import com.company.CustomInputStream;
-
-import com.company.Main;
+import com.company.Controller.CustomInputStream;
+import com.company.model.DatabaseManager;
+import com.company.model.Main;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -49,13 +49,8 @@ public class IntegrationTest {
                 "All available command: " +
                 "\nconnect - connect to database" +
                 "\nlist - to review all user's tables" +
-                "\nfind <tableName> - to find and view table in database" +
-                "\nfind <tableName Limit/Offset> - to find and view part of table in database" +
-                "\nchange <columnNumber|rowNumber> - to change data in the table" +
-                "\ninsert - to add new rows of data to a table in the database" +
-                "\nselect - to select data from the database" +
-                "\ndelete - to delete records in the table" +
-                "\nupdate - to update records in a table" +
+                "\nfind - to find and view table in database" +
+                "\nchange - to change data in the table" +
                 "\nexit\n", getData());
 
     }
@@ -76,22 +71,22 @@ public class IntegrationTest {
                         "To view all available command, enter: command list or enter the command, which you want to do\n"+
                 // connect
                         "Please, write name of database in which you want to work, username and password in format: nameOfDataBase|username|password \n" +
-                //sqlcmd|postgres|yes
-          //              "Connection successful\n"+
                 // find
 
                         "For view table, please, enter the name: find <tableName> or find <tableName LIMIT/OFFSET>\n"+
                 // find user
-                        "Rick|999080|9|\n" +
-                        "John|580|6|\n" +
                         "Patrik|null|3|\n" +
                         "Mike|333|16|\n" +
-                        "Harry|pass|1|\n" +
                         "Bob|123|7|\n" +
                         "Nick|24|98|\n" +
-                        "Martin|58|17|\n", getData());
+                        "Martin|58|17|\n"+
+                        "null|999080|9|\n" +
+                        "null|580|6|\n" +
+                        "Test|pass|1|\n"
+                        , getData());
                 //exit
     }
+
 
     @Test
     public void connectTest() {
@@ -139,7 +134,7 @@ public class IntegrationTest {
                 //change
                 "To change data in table enter column's and row's numbers in format: change <columnNumber|rowNumber>\n"+
                 //change 1|1
-                "The data which you want to change: Rick\n"+
+                "The data which you want to change: Patrik\n"+
                 "Put the name of the action which you want to do with data: addRow, delete, rewrite\n"+
                 //rewrite
                 "Enter new data\n"
@@ -178,7 +173,7 @@ public class IntegrationTest {
                 //change
                 "To change data in table enter column's and row's numbers in format: change <columnNumber|rowNumber>\n"+
                 //change 1|1
-                "The data which you want to change: Rick\n"+
+                "The data which you want to change: Patrik\n"+
                 "Put the name of the action which you want to do with data: addRow, delete, rewrite\n"
                 , getData());
 
@@ -213,7 +208,7 @@ public class IntegrationTest {
                 //change
                 "To change data in table enter column's and row's numbers in format: change <columnNumber|rowNumber>\n"+
                 //change 1|1
-                "The data which you want to change: Rick\n"+
+                "The data which you want to change: Patrik\n"+
                 "Put the name of the action which you want to do with data: addRow, delete, rewrite\n"+
                 "Enter new data separated by space\n"
                 , getData());
@@ -248,11 +243,7 @@ public class IntegrationTest {
                 //change
                 "To change data in table enter column's and row's numbers in format: change <columnNumber|rowNumber>\n"+
                 //change 1|1
-                "The data which you want to change: Rick\n"+
-                "Put the name of the action which you want to do with data: addRow, delete, rewrite\n"+
-                "This action does not exist\n"+
-                "Put the name of the action which you want to do with data: addRow, delete, rewrite\n"+
-                "This action does not exist\n"+
+                "The data which you want to change: Patrik\n" +
                 "Put the name of the action which you want to do with data: addRow, delete, rewrite\n"
                 , getData());
 

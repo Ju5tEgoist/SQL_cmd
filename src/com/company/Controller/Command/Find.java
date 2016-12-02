@@ -1,8 +1,10 @@
-package com.company.Command;
+package com.company.Controller.Command;
 
-import com.company.ConsoleReader;
-import com.company.ContentsOfTheTables;
-import com.company.DatabaseList;
+import com.company.Controller.Command.Command;
+import com.company.Controller.Command.List;
+import com.company.Controller.ContentsOfTheTables;
+import com.company.view.ConsoleReader;
+import com.company.model.DatabaseList;
 import java.sql.SQLException;
 
 /**

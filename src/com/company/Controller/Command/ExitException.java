@@ -1,4 +1,4 @@
-package com.company.Command;
+package com.company.Controller.Command;
 
 /**
  * Created by yulia on 07.11.16.

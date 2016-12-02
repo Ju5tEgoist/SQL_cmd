@@ -1,7 +1,4 @@
-package com.company.Command;
-
-import java.sql.Connection;
-import java.sql.SQLException;
+package com.company.Controller.Command;
 
 /**
  * Created by yulia on 07.11.16.

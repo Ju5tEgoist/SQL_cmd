@@ -1,4 +1,4 @@
-package com.company;
+package com.company.view;
 
 /**
  * Created by yulia on 13.10.16.

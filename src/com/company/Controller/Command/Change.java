@@ -1,9 +1,8 @@
-package com.company.Command;
+package com.company.Controller.Command;
 
-import com.company.ChangeTable;
-import com.company.ConsoleReader;
-import com.company.ContentsOfTheTables;
-import com.company.DatabaseManager;
+import com.company.Controller.*;
+import com.company.view.ConsoleReader;
+import com.company.model.DatabaseManager;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -50,7 +49,7 @@ public class Change implements Command {
         changeTable.changeData(id, columnNumber);
         }
 
-    public void checkCommand(String selectedTableName, String[] parts) throws SQLException, ClassNotFoundException {
+    public boolean checkCommand(String selectedTableName, String[] parts) throws SQLException, ClassNotFoundException {
         if (parts.length == 2) {
             String[] partsCR = parts[parts.length - 1].split("\\|");
             String limitString = partsCR[0];
@@ -66,28 +65,30 @@ public class Change implements Command {
             System.out.println("This command does not exist. Try again");
             process(selectedTableName);
         }
+        return true;
     }
 
     public String isSelectedTableName(String database) throws SQLException, ClassNotFoundException {
-        String selectedTableName = Find.selectedTableName;
-        if(selectedTableName == null){
+
+        if(Find.selectedTableName == null){
             System.out.println("Before change table, please, enter table name.");
             list.process(database);
             String[] tableNames = list.getTableNames(database);
-           System.out.println("\t");
+            System.out.println("\t");
             String inputName = consoleReader.read();
             for(String tableName : tableNames){
                 if(tableName.equals(inputName)){
-                    selectedTableName = tableName;
+                    Find.selectedTableName = tableName;
                 }
             }
-            if(selectedTableName == null){
+            if(Find.selectedTableName == null){
                 System.out.println("Try again");
                 isSelectedTableName(database);
 
             }
         }
-        return selectedTableName;
+
+        return Find.selectedTableName;
     }
 }
 

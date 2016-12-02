@@ -1,6 +1,7 @@
-package com.company.Command;
+package com.company.Controller.Command;
 
-import com.company.DatabaseManager;
+
+import com.company.model.DatabaseManager;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

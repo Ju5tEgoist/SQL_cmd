@@ -1,6 +1,6 @@
-package com.company.Command;
+package com.company.Controller.Command;
 
-import com.company.*;
+import com.company.model.DatabaseManager;
 
 import java.sql.Connection;
 import java.sql.SQLException;

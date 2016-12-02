@@ -1,6 +1,7 @@
-package com.company.Command;
+package com.company.Controller;
 
-import com.company.*;
+import com.company.Controller.Command.*;
+import com.company.view.ConsoleReader;
 
 import java.sql.SQLException;
 
@@ -9,23 +10,12 @@ import java.sql.SQLException;
  */
 public class Introduction {
 
-    ConsoleReader consoleReader;
-    ContentsOfTheTables contentsOfTheTables;
+    ConsoleReader consoleReader = new ConsoleReader();
 
-    public Introduction(){
-        this.consoleReader = new ConsoleReader();
-        this.contentsOfTheTables = new ContentsOfTheTables();
-    }
-
-
-    public void doCommand() {
-       System.out.println( "To view all available command, enter: command list or enter the command, which you want to do");
-
-        try {
+    public boolean doCommand() throws SQLException, ClassNotFoundException {
+        System.out.println( "To view all available command, enter: command list or enter the command, which you want to do");
             getDetermineCommand();
-        }
-        catch (Exception e){
-        }
+        return true;
     }
 
     public void getDetermineCommand() throws SQLException, ClassNotFoundException {
@@ -46,7 +36,9 @@ public class Introduction {
                 break;
             }
         }
-        getDetermineCommand();
-       // return command;
+
+            getDetermineCommand();
+
+
     }
 }
