@@ -2,7 +2,6 @@ package com.company;
 
 import com.company.Controller.*;
 import com.company.Controller.Command.Change;
-import com.company.Controller.Command.Command;
 import com.company.Controller.Command.Find;
 import com.company.model.DatabaseManager;
 import org.junit.Before;

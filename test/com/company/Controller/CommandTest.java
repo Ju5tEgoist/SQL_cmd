@@ -63,28 +63,6 @@ public class CommandTest {
         CommandList commandList = new CommandList();
         assertTrue(commandList.shouldProcess("command list"));
     }
-//    @Test
-//    public void shouldChooseCommandList() throws SQLException, ClassNotFoundException {
-//        in.add("command list");
-//        Introduction introduction = new Introduction();
-//        assertTrue(introduction.doCommand());
-//    }
-//    @Test
-//    public void shouldChooseFind() throws SQLException, ClassNotFoundException {
-//        in.add("connect");
-//        in.add("sqlcmd|postgres|yes");
-//        in.add("find");
-//        Introduction introduction = new Introduction();
-//        assertTrue(introduction.doCommand());
-//    }
-//    @Test
-//    public void shouldChooseFindProcess() throws SQLException, ClassNotFoundException {
-////        in.add("connect");
-//        in.add("sqlcmd|postgres|yes");
-//        in.add("find");
-//        in.add("find user");
-//        Find find = new Find();
-//        assertTrue(find.process("sqlcmd"));
-//    }
+
 
 }
