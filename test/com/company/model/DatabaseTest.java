@@ -48,10 +48,5 @@ public class DatabaseTest {
         assertEquals(expectedTableNames, list.getTableNames("sqlcmd"));
 
     }
-    @Test
-    public void welcomeDatabase() throws SQLException {
-        Main main = new Main();
-        assertTrue(main.welcomeDatabase());
 
-    }
 }

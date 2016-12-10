@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.Controller.Command.ExitException;
 import com.company.Controller.CustomInputStream;
 import com.company.model.DatabaseManager;
 import com.company.model.Main;
@@ -22,7 +23,7 @@ public class IntegrationTest {
     private CustomInputStream in;
     private ByteArrayOutputStream out;
     private DatabaseManager databaseManager;
-
+    boolean condition;
     @Before
     public void setup() {
         databaseManager = new DatabaseManager();
@@ -31,9 +32,10 @@ public class IntegrationTest {
 
         System.setIn(in);
         System.setOut(new PrintStream(out));
+        condition = true;
     }
 //
-    @Test
+    @Test(expected = ExitException.class)
     public void testCommandList() {
         // given
         in.add("command list");
@@ -54,7 +56,7 @@ public class IntegrationTest {
                 "\nexit\n", getData());
 
     }
-    @Test
+    @Test(expected = ExitException.class)
     public void testFindTable() {
         // given
         in.add("connect");
@@ -88,7 +90,7 @@ public class IntegrationTest {
     }
 
 
-    @Test
+    @Test(expected = ExitException.class)
     public void connectTest() {
         // given
         in.add("connect");
@@ -107,14 +109,12 @@ public class IntegrationTest {
         //exit
     }
 
-    @Test
+    @Test(expected = ExitException.class)
     public void changeRewriteTest() {
         // given
         in.add("connect");
         in.add("sqlcmd|postgres|yes");
-
         in.add("change");
-        in.add("user");
         in.add("change 1|1");
         in.add("rewrite");
         in.add("Test");
@@ -123,19 +123,19 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         // then
-        assertEquals("Hi, I'm Database manager! \n"+
-                "To view all available command, enter: command list or enter the command, which you want to do\n"+
+        assertEquals("Hi, I'm Database manager! \n" +
+                "To view all available command, enter: command list or enter the command, which you want to do\n" +
                 // connect
-                "Please, write name of database in which you want to work, username and password in format: nameOfDataBase|username|password \n"+
+                "Please, write name of database in which you want to work, username and password in format: nameOfDataBase|username|password \n" +
                 //sqlcmd|postgres|yes
 
-                "Before change table, please, enter table name.\n"+
-                "List of all available tables: [employee, user]\t\n"+
+                "Before change table, please, enter table name.\n" +
+                "List of all available tables: [employee, user]\t\n" +
                 //change
-                "To change data in table enter column's and row's numbers in format: change <columnNumber|rowNumber>\n"+
+                "To change data in table enter column's and row's numbers in format: change <columnNumber|rowNumber>\n" +
                 //change 1|1
-                "The data which you want to change: Patrik\n"+
-                "Put the name of the action which you want to do with data: addRow, delete, rewrite\n"+
+                "The data which you want to change: Patrik\n" +
+                "Put the name of the action which you want to do with data: addRow, delete, rewrite\n" +
                 //rewrite
                 "Enter new data\n"
                 //Test
@@ -146,7 +146,7 @@ public class IntegrationTest {
 
         //exit
     }
-    @Test
+    @Test(expected = ExitException.class)
     public void changeDeleteTest() {
         // given
         in.add("connect");
@@ -181,14 +181,14 @@ public class IntegrationTest {
         //exit
     }
 
-    @Test
+    @Test(expected = ExitException.class)
     public void changeAddRowTest() {
         // given
+        DatabaseManager.connection = null;
         in.add("connect");
         in.add("sqlcmd|postgres|yes");
 
         in.add("change");
-        in.add("user");
         in.add("change 1|1");
         in.add("addRow");
         in.add("Test test 00");
@@ -216,7 +216,7 @@ public class IntegrationTest {
 
         //exit
     }
-    @Test
+    @Test(expected = ExitException.class)
     public void changeErrorTest() {
         // given
         in.add("connect");
@@ -250,6 +250,25 @@ public class IntegrationTest {
 
         //exit
     }
+
+    @Test(expected = ExitException.class)
+    public void shouldPassForEmptyLine() {
+        // given
+        in.add("connect");
+        in.add("kljk");
+        in.add("exit");
+        // when
+        Main.main(new String[0]);
+
+        // then
+        assertEquals("Hi, I'm Database manager! \n"+
+                "To view all available command, enter: command list or enter the command, which you want to do\n"
+                , getData());
+
+
+        //exit
+    }
+
     public String getData() {
         try {
             String result = new String(out.toByteArray(), "UTF-8");

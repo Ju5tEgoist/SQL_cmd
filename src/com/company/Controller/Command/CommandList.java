@@ -25,5 +25,6 @@ public class CommandList implements Command {
     @Override
     public void process(String command) throws SQLException, ClassNotFoundException {
             System.out.println(INFO);
+
     }
 }

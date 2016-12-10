@@ -47,6 +47,7 @@ public class Change implements Command {
             }
         System.out.println("The data which you want to change: " + result);
         changeTable.changeData(id, columnNumber);
+
         }
 
     public boolean checkCommand(String selectedTableName, String[] parts) throws SQLException, ClassNotFoundException {

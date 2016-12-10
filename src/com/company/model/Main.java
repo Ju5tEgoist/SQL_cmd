@@ -2,6 +2,8 @@ package com.company.model;
 
 import com.company.Controller.Introduction;
 
+import java.sql.SQLException;
+
 /**
  * Created by yulia on 29.10.16.
  */
@@ -20,7 +22,9 @@ public class Main {
         try {
             introduction.doCommand();
         }
-        catch (Exception e){}
+        catch (SQLException | ClassNotFoundException e){
+            System.out.println(e);
+        }
         return true;
     }
 }

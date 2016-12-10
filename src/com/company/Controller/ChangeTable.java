@@ -12,7 +12,7 @@ import java.sql.*;
 public class ChangeTable {
     ConsoleReader consoleReader = new ConsoleReader();
 
-    public String changeData( String result, int columnNumber) throws SQLException {
+    public String changeData( String result, int columnNumber) throws SQLException, ClassNotFoundException {
         System.out.println("Put the name of the action which you want to do with data: addRow, delete, rewrite");
         String action = consoleReader.read();
         String fail = "";
@@ -28,22 +28,23 @@ public class ChangeTable {
 
         if(!(fail.equals("")) ){
             System.out.println(fail);
-            changeData(result, columnNumber);
+            Introduction introduction = new Introduction();
+            introduction.getDetermineCommand();
         }
         return fail;
     }
 
     public String delete(int columnNumber, String id) throws SQLException {
-        String newData = null;
+        String newData = " ";
         Statement stmt = DatabaseManager.getConnection().createStatement();
         String columnName = getColumnName(columnNumber, stmt);
-        String sql = "UPDATE public." + Find.selectedTableName + " set " + columnName + " = "
-                + newData +  " WHERE id = " + id +";";
+        String sql = "UPDATE public." + Find.selectedTableName + " set " + columnName + " = " + "'"
+                + newData + "'" +  " WHERE id = " + id +";";
         stmt.executeUpdate(sql);
         return columnName;
     }
 
-    public String addRow() throws SQLException {
+    public boolean addRow() throws SQLException {
         Statement stmt = DatabaseManager.getConnection().createStatement();
         System.out.println("Enter new data separated by space");
         String newResult = consoleReader.read();
@@ -53,7 +54,7 @@ public class ChangeTable {
         String newData = getNewData(newValues);
         String sql = "INSERT INTO public." + Find.selectedTableName + " " + columnNames + " VALUES " + newData + ";" ;
         stmt.executeUpdate(sql);
-        return newResult;
+        return true;
     }
 
     private String getNewData(String[] newValues) throws SQLException {

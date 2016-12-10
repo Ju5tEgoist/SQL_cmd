@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by yulia on 25.11.16.
@@ -79,11 +80,10 @@ public class ProcessTest {
     }
     @Test
     public void shouldAddRow() throws SQLException {
-        in.add("sqlcmd|postgres|yes");
-        in.add("Test test 88");
+        in.add("Tom manager");
         ChangeTable changeTable = new ChangeTable();
-        Find.selectedTableName = "user";
-        assertEquals("Test test 88",changeTable.addRow());
+        Find.selectedTableName = "employee";
+        assertTrue( changeTable.addRow());
     }
     @Test
     public void shouldRewrite() throws SQLException {

@@ -14,7 +14,7 @@ public class Introduction {
 
     public boolean doCommand() throws SQLException, ClassNotFoundException {
         System.out.println( "To view all available command, enter: command list or enter the command, which you want to do");
-            getDetermineCommand();
+        getDetermineCommand();
         return true;
     }
 
@@ -33,12 +33,11 @@ public class Introduction {
             if (command.shouldProcess(inputCommand))
             {
                 command.process(inputCommand);
+
                 break;
             }
         }
-
             getDetermineCommand();
-
 
     }
 }

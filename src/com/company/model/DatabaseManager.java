@@ -8,7 +8,7 @@ import java.sql.*;
  * Created by yulia on 28.09.16.
  */
 public class DatabaseManager {
-     static Connection connection;
+     public static Connection connection;
 
     private static Connection connect(String database, String user, String password) throws SQLException, ClassNotFoundException {
 
