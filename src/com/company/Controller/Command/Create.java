@@ -24,6 +24,6 @@ public class Create implements Command {
         Integer columnNumber = Integer.valueOf(consoleReader.read());
         CreateTableQueryBuilder createTableQueryBuilder = new CreateTableQueryBuilder();
         createTableQueryBuilder.queryBuilder(columnNumber, tableName);
-
+        System.out.println(tableName + " was created");
     }
 }

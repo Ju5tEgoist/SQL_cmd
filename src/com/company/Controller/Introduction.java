@@ -30,7 +30,8 @@ public class Introduction {
                 new Exit(),
                 new Clear(),
                 new Drop(),
-                new Create()
+                new Create(),
+                new Insert()
         };
         for (Command command : commands) {
             if (command.shouldProcess(inputCommand))

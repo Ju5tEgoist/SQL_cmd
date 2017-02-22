@@ -13,6 +13,7 @@ public class Help implements Command {
             "\nclear - clears the contents of the specified table" +
             "\ndrop - drops the specified table" +
             "\ncreate - create new table" +
+            "\ninsert - add row in the table" +
             "\nlist - to review all user's tables" +
             "\nfind - to find and view table in database" +
             "\nchange - to change data in the table" +

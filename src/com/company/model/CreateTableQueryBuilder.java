@@ -22,7 +22,6 @@ public class CreateTableQueryBuilder {
             }
         }
         String sql = "CREATE TABLE public." + tableName + "(" + properties + ")";
-        System.out.println(sql);
         DatabaseManager.getStatement().executeUpdate(sql);
     }
 

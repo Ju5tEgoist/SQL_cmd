@@ -36,24 +36,23 @@ public class ChangeTable {
 
     public String delete(int columnNumber, String id) throws SQLException {
         String newData = " ";
-        Statement stmt = DatabaseManager.getConnection().createStatement();
-        String columnName = getColumnName(columnNumber, stmt);
+        String columnName = getColumnName(columnNumber);
         String sql = "UPDATE public." + Find.selectedTableName + " set " + columnName + " = " + "'"
                 + newData + "'" +  " WHERE id = " + id +";";
-        stmt.executeUpdate(sql);
+        DatabaseManager.getStatement().executeUpdate(sql);
         return columnName;
     }
 
     public boolean addRow() throws SQLException {
-        Statement stmt = DatabaseManager.getConnection().createStatement();
+
         System.out.println("Enter new data separated by space");
         String newResult = consoleReader.read();
         String[] newValues = newResult.split(" ");
-        ResultSet rs = stmt.executeQuery("SELECT * FROM public." + Find.selectedTableName);
+        ResultSet rs = DatabaseManager.getStatement().executeQuery("SELECT * FROM public." + Find.selectedTableName);
         String columnNames = getAllColumnNames(rs);
         String newData = getNewData(newValues);
         String sql = "INSERT INTO public." + Find.selectedTableName + " " + columnNames + " VALUES " + newData + ";" ;
-        stmt.executeUpdate(sql);
+        DatabaseManager.getStatement().executeUpdate(sql);
         return true;
     }
 
@@ -99,16 +98,16 @@ public class ChangeTable {
         System.out.println("Enter new data");
         String newData = consoleReader.read();
         Statement stmt = DatabaseManager.getConnection().createStatement();
-        String sql = "UPDATE public." + Find.selectedTableName + " set " + getColumnName(columnNumber, stmt) + " = "
+        String sql = "UPDATE public." + Find.selectedTableName + " set " + getColumnName(columnNumber) + " = "
                 + "'" + newData + "'" + " WHERE id = " + id +";";
         stmt.executeUpdate(sql);
         return newData;
     }
-    public String getColumnName(int columnNumber, Statement stmt) {
+    public String getColumnName(int columnNumber) {
         ResultSet rs;
         String columnName = null;
         try{
-        rs = stmt.executeQuery("SELECT * FROM public." + Find.selectedTableName);
+        rs = DatabaseManager.getStatement().executeQuery("SELECT * FROM public." + Find.selectedTableName);
 
         columnName = rs.getMetaData().getColumnName(columnNumber);
         } catch (SQLException e){

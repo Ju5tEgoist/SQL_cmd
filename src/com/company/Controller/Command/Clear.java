@@ -21,6 +21,6 @@ public class Clear implements Command{
         String tableName = databaseList.getTableName();
         String sql = "DELETE FROM public." + tableName;
         DatabaseManager.getStatement().executeUpdate(sql);
-        System.out.println(tableName + " is cleaned");
+        System.out.println(tableName + " was cleaned");
     }
 }
