@@ -26,6 +26,4 @@ public class Create implements Command {
         createTableQueryBuilder.queryBuilder(columnNumber, tableName);
 
     }
-
-
 }

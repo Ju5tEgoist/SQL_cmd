@@ -64,7 +64,7 @@ public class ColumnDefinition {
         }
 
         public Builder defaultValue(String defaultValue){
-            this.defaultValue = defaultValue;
+            this.defaultValue = null;
             return this;
         }
         public ColumnDefinition build(){

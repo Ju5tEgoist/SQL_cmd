@@ -1,6 +1,7 @@
 package com.company.model;
 
 import java.sql.SQLException;
+
 import java.util.List;
 
 /**
@@ -12,13 +13,17 @@ public class CreateTableQueryBuilder {
         String properties = "";
         ColumnDefinitionProvider columnDefinitionProvider = new ColumnDefinitionProvider();
         List<ColumnDefinition> columnDefinition = columnDefinitionProvider.getProperties(columnNumber);
-        int i = 0;
-        while(i < columnDefinition.size()-1)  {
-            properties += columnDefinition.iterator().next() + " ";
+        for (int i = 0; i < columnDefinition.size(); i++){
+            if(i == 0){
+                properties += columnDefinition.get(i).getName() + " " + columnDefinition.get(i).getDataType() + " " + columnDefinition.get(i).getDefaultValue();
+            }
+            else {
+                properties += "," + " " + columnDefinition.get(i).getName() + " " + columnDefinition.get(i).getDataType() + " " + columnDefinition.get(i).getDefaultValue();
+            }
         }
         String sql = "CREATE TABLE public." + tableName + "(" + properties + ")";
-        DatabaseManager.getStatement().executeUpdate(sql);
         System.out.println(sql);
+        DatabaseManager.getStatement().executeUpdate(sql);
     }
 
 
