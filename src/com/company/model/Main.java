@@ -12,8 +12,6 @@ public class Main {
     public static void main(String[] args)  {
             Main main = new Main();
             main.welcomeDatabase();
-        DatabaseManager databaseManager = new DatabaseManager();
-
     }
 
     public boolean welcomeDatabase()  {

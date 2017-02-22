@@ -8,7 +8,8 @@ import java.sql.*;
  * Created by yulia on 28.09.16.
  */
 public class DatabaseManager {
-     public static Connection connection;
+    public static Connection connection;
+    private static Statement stmt;
 
     private static Connection connect(String database, String user, String password) throws SQLException, ClassNotFoundException {
 
@@ -30,8 +31,12 @@ public class DatabaseManager {
             }
             System.out.println("Connection successful");
 
-
+        stmt = connection.createStatement();
         return connection;
+    }
+
+    public static Statement getStatement(){
+        return stmt;
     }
 
     public static Connection getConnection()  {

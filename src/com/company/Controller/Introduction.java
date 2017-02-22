@@ -13,29 +13,35 @@ public class Introduction {
     ConsoleReader consoleReader = new ConsoleReader();
 
     public boolean doCommand() throws SQLException, ClassNotFoundException {
-        System.out.println( "To view all available command, enter: command list or enter the command, which you want to do");
+        System.out.println( "Enter the command, which you want to do or 'help'");
         getDetermineCommand();
         return true;
     }
 
     public void getDetermineCommand() throws SQLException, ClassNotFoundException {
         String inputCommand = consoleReader.read();
-
+        boolean condition = false;
         Command[] commands = {
-                new CommandList(),
+                new Help(),
                 new Change(),
                 new Connect(),
                 new Find(),
                 new List(),
-                new Exit()
+                new Exit(),
+                new Clear(),
+                new Drop(),
+                new Create()
         };
         for (Command command : commands) {
             if (command.shouldProcess(inputCommand))
             {
+                condition = true;
                 command.process(inputCommand);
-
                 break;
             }
+        }
+        if(!condition){
+            System.out.println("This command does not exist. Try again");
         }
             getDetermineCommand();
 

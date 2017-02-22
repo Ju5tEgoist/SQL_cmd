@@ -1,6 +1,7 @@
 package com.company.model;
 
 import com.company.Controller.ContentsOfTheTables;
+import com.company.view.ConsoleReader;
 
 import java.sql.*;
 
@@ -31,5 +32,11 @@ public class DatabaseList{
             }
             System.out.print("\n");
         }
+    }
+
+    public String getTableName(){
+        System.out.println("Enter table name");
+        ConsoleReader consoleReader = new ConsoleReader();
+        return consoleReader.read();
     }
 }

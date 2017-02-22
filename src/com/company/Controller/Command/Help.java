@@ -5,10 +5,14 @@ import java.sql.SQLException;
 /**
  * Created by yulia on 08.11.16.
  */
-public class CommandList implements Command {
+public class Help implements Command {
 
     public static final String INFO = "All available command: " +
+            "\nhelp - show all command" +
             "\nconnect - connect to database" +
+            "\nclear - clears the contents of the specified table" +
+            "\ndrop - drops the specified table" +
+            "\ncreate - create new table" +
             "\nlist - to review all user's tables" +
             "\nfind - to find and view table in database" +
             "\nchange - to change data in the table" +
@@ -16,7 +20,7 @@ public class CommandList implements Command {
 
     @Override
     public boolean shouldProcess(String command) {
-        return "command list".equals(command);
+        return "help".equals(command);
     }
 
     @Override

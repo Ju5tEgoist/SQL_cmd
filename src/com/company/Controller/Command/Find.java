@@ -1,7 +1,5 @@
 package com.company.Controller.Command;
 
-import com.company.Controller.Command.Command;
-import com.company.Controller.Command.List;
 import com.company.Controller.ContentsOfTheTables;
 import com.company.view.ConsoleReader;
 import com.company.model.DatabaseList;
