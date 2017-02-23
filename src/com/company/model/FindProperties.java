@@ -1,10 +1,14 @@
-package com.company.Controller;
+package com.company.model;
 
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by yulia on 04.10.16.
  */
-public class ContentsOfTheTables{
+public class FindProperties {
 
     static private int limit;
     static private int offset;
@@ -33,5 +37,20 @@ public class ContentsOfTheTables{
 
     public int getOffset(){
         return offset;
+    }
+
+
+    public String[] getTableNames(String database) throws SQLException {
+        String[] tableNames;
+        String concatenatedTableNames = "";
+        Connection connect = DatabaseManager.getConnection();
+        ResultSet list = connect.getMetaData().getTables(database, "public", "%", null);
+        while (list.next()) {
+            String tableName = list.getString(3);
+            concatenatedTableNames =  tableName  + " " + concatenatedTableNames;
+        }
+        tableNames = concatenatedTableNames.split(" ") ;
+
+        return tableNames;
     }
 }

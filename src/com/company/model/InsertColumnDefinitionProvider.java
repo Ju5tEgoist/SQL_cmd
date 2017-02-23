@@ -12,8 +12,8 @@ import java.util.List;
 public class InsertColumnDefinitionProvider {
     protected List getProperties( ResultSet rs) throws SQLException {
         List<InsertUpdateDeleteColumnDefinition> insertColumnDefinitions = new ArrayList<>();
-        DatabaseList databaseList = new DatabaseList();
-        System.out.println("All column's names in this table: " + databaseList.getAllColumnsNames(rs));
+        DatabasePropertiesProvider databasePropertiesProvider = new DatabasePropertiesProvider();
+        System.out.println("All column's names in this table: " + databasePropertiesProvider.getAllColumnsNames(rs));
         for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
             System.out.println("Now enter column's name and value: <name/value>");
             ConsoleReader consoleReader = new ConsoleReader();

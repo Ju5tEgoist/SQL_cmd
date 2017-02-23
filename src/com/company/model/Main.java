@@ -1,6 +1,6 @@
 package com.company.model;
 
-import com.company.Controller.Introduction;
+import com.company.Controller.MainCommand;
 
 import java.sql.SQLException;
 
@@ -16,9 +16,9 @@ public class Main {
 
     public boolean welcomeDatabase()  {
         System.out.println("Hi, I'm Database manager! ");
-        Introduction introduction = new Introduction();
+        MainCommand mainCommand = new MainCommand();
         try {
-            introduction.doCommand();
+            mainCommand.doCommand();
         }
         catch (SQLException | ClassNotFoundException e){
             System.out.println(e);

@@ -1,6 +1,6 @@
 package com.company.Controller.Command;
 
-import com.company.model.DatabaseList;
+import com.company.model.DatabasePropertiesProvider;
 import com.company.model.DatabaseManager;
 
 import java.sql.SQLException;
@@ -17,8 +17,8 @@ public class Clear implements Command{
 
     @Override
     public void process(String command) throws SQLException, ClassNotFoundException {
-        DatabaseList databaseList = new DatabaseList();
-        String tableName = databaseList.getTableName();
+        DatabasePropertiesProvider databasePropertiesProvider = new DatabasePropertiesProvider();
+        String tableName = databasePropertiesProvider.getTableName();
         String sql = "DELETE FROM public." + tableName;
         DatabaseManager.getStatement().executeUpdate(sql);
         System.out.println(tableName + " was cleaned");

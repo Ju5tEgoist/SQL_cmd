@@ -8,9 +8,9 @@ import java.sql.SQLException;
 /**
  * Created by yulia on 06.11.16.
  */
-public class Introduction {
+public class MainCommand {
 
-    ConsoleReader consoleReader = new ConsoleReader();
+
 
     public boolean doCommand() throws SQLException, ClassNotFoundException {
         System.out.println( "Enter the command, which you want to do or 'help'");
@@ -19,11 +19,11 @@ public class Introduction {
     }
 
     public void getDetermineCommand() throws SQLException, ClassNotFoundException {
+        ConsoleReader consoleReader = new ConsoleReader();
         String inputCommand = consoleReader.read();
         boolean condition = false;
         Command[] commands = {
                 new Help(),
-                new Change(),
                 new Connect(),
                 new Find(),
                 new List(),
@@ -46,6 +46,7 @@ public class Introduction {
         if(!condition){
             System.out.println("This command does not exist. Try again");
         }
+        System.out.println( "Enter the command, which you want to do or 'help'");
             getDetermineCommand();
 
     }
