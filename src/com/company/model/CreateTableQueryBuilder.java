@@ -11,8 +11,8 @@ public class CreateTableQueryBuilder {
 
     public void queryBuilder(Integer columnNumber, String tableName) throws SQLException {
         String properties = "";
-        ColumnDefinitionProvider columnDefinitionProvider = new ColumnDefinitionProvider();
-        List<ColumnDefinition> columnDefinition = columnDefinitionProvider.getProperties(columnNumber);
+        CreateColumnDefinitionProvider columnDefinitionProvider = new CreateColumnDefinitionProvider();
+        List<CreateColumnDefinition> columnDefinition = columnDefinitionProvider.getProperties(columnNumber);
         for (int i = 0; i < columnDefinition.size(); i++){
             if(i == 0){
                 properties += columnDefinition.get(i).getName() + " " + columnDefinition.get(i).getDataType() + " " + columnDefinition.get(i).getDefaultValue();

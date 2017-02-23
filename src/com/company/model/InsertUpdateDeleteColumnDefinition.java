@@ -3,15 +3,15 @@ package com.company.model;
 /**
  * Created by yulia on 22.02.17.
  */
-public class InsertColumnDefinition {
+public class InsertUpdateDeleteColumnDefinition {
     private String name;
     private String value;
 
 
-    public InsertColumnDefinition() {
+    public InsertUpdateDeleteColumnDefinition() {
     }
 
-    private InsertColumnDefinition(Builder builder) {
+    private InsertUpdateDeleteColumnDefinition(Builder builder) {
         name = builder.name;
 
         value = builder.value;
@@ -43,8 +43,8 @@ public class InsertColumnDefinition {
             this.value = value;
             return this;
         }
-        public InsertColumnDefinition build(){
-            return new InsertColumnDefinition(this);
+        public InsertUpdateDeleteColumnDefinition build(){
+            return new InsertUpdateDeleteColumnDefinition(this);
         }
     }
 }

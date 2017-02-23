@@ -1,20 +1,18 @@
 package com.company.model;
 
-import sun.text.bidi.BidiLine;
-
 /**
  * Created by yulia on 21.02.17.
  */
-public class ColumnDefinition {
+public class CreateColumnDefinition {
     private String name;
     private String dataType;
     private boolean nullable;
     private String defaultValue;
 
-    public ColumnDefinition() {
+    public CreateColumnDefinition() {
     }
 
-    private ColumnDefinition(Builder builder) {
+    private CreateColumnDefinition(Builder builder) {
         name = builder.name;
         dataType = builder.dataType;
         nullable = builder.nullable;
@@ -67,8 +65,8 @@ public class ColumnDefinition {
             this.defaultValue = null;
             return this;
         }
-        public ColumnDefinition build(){
-            return new ColumnDefinition(this);
+        public CreateColumnDefinition build(){
+            return new CreateColumnDefinition(this);
         }
     }
 }

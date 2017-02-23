@@ -12,7 +12,7 @@ public class InsertTableQueryBuilder {
         String propertiesColumn = "";
         String propertiesValue = "";
         InsertColumnDefinitionProvider insertColumnDefinitionProvider = new InsertColumnDefinitionProvider();
-        List<InsertColumnDefinition> insertColumnDefinition = insertColumnDefinitionProvider.getProperties(rs);
+        List<InsertUpdateDeleteColumnDefinition> insertColumnDefinition = insertColumnDefinitionProvider.getProperties(rs);
         for (int i = 0; i < rs.getMetaData().getColumnCount(); i++){
             String value = insertColumnDefinition.get(i).getValue();
             if(('a' <= value.charAt(0) && value.charAt(0) <= 'z') ||('A' <= value.charAt(0) && value.charAt(0) <= 'Z') ){

@@ -1,7 +1,6 @@
 package com.company.model;
 
 import com.company.view.ConsoleReader;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,14 +11,14 @@ import java.util.List;
  */
 public class InsertColumnDefinitionProvider {
     protected List getProperties( ResultSet rs) throws SQLException {
-        List<InsertColumnDefinition> insertColumnDefinitions = new ArrayList<>();
-
-        System.out.println("All column's names in this table: " + getAllColumnsNames(rs));
+        List<InsertUpdateDeleteColumnDefinition> insertColumnDefinitions = new ArrayList<>();
+        DatabaseList databaseList = new DatabaseList();
+        System.out.println("All column's names in this table: " + databaseList.getAllColumnsNames(rs));
         for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
             System.out.println("Now enter column's name and value: <name/value>");
             ConsoleReader consoleReader = new ConsoleReader();
             String[] inputParts = consoleReader.read().split("/");
-            InsertColumnDefinition insertColumnDefinition = InsertColumnDefinition.builder()
+            InsertUpdateDeleteColumnDefinition insertColumnDefinition = InsertUpdateDeleteColumnDefinition.builder()
                     .name(inputParts[0])
                     .value(inputParts[1])
                     .build();
@@ -27,13 +26,5 @@ public class InsertColumnDefinitionProvider {
         }
         return insertColumnDefinitions;
     }
-    public String getAllColumnsNames(ResultSet rs) throws SQLException {
-        String columnNames = "";
-        int columnsNumber = rs.getMetaData().getColumnCount();
-        for (int i = 1; i <= columnsNumber; i++) {
-            if (i < columnsNumber) { columnNames += rs.getMetaData().getColumnName(i) + "," + " ";}
-            else { columnNames += rs.getMetaData().getColumnName(i);}
-        }
-        return columnNames;
-    }
+
 }
