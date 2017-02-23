@@ -15,6 +15,7 @@ public class Help implements Command {
             "\ncreate - create new table" +
             "\ninsert - add row in the table" +
             "\nupdate - change value" +
+            "\ndelete - delete value" +
             "\nlist - to review all user's tables" +
             "\nfind - to find and view table in database" +
             "\nchange - to change data in the table" +
