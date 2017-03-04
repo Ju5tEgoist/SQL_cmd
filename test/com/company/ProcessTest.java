@@ -1,8 +1,6 @@
 package com.company;
 
-import com.company.Controller.*;
-import com.company.Controller.Command.Delete;
-import com.company.Controller.Command.Find;
+import com.company.Controller.Command.Update;
 import com.company.model.*;
 import com.company.view.CustomInputStream;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -28,7 +26,7 @@ public class ProcessTest {
     public static final String TABLE_NAME = "testTable";
     private CustomInputStream in;
     private ByteArrayOutputStream out;
-    private DatabaseManager databaseManager;
+    private DatabaseManager databaseManager = new DatabaseManager();
 
 
     @Before
@@ -43,7 +41,7 @@ public class ProcessTest {
     @After
     public void cleanUp() throws SQLException, ClassNotFoundException {
         DatabaseManager.connect("sqlcmd", "postgres", "yes");
-        DatabaseManager.getStatement().executeUpdate("DROP TABLE IF EXISTS public." + TABLE_NAME);
+        databaseManager.getStatement().executeUpdate("DROP TABLE IF EXISTS public." + TABLE_NAME);
     }
     @Test
     public void shouldConnect() throws SQLException, ClassNotFoundException {
@@ -89,7 +87,7 @@ public class ProcessTest {
         assertTrue(createTableQueryBuilder.queryBuildExecute(1, TABLE_NAME));
     }
     @Test
-    public void shouldNotNullGetPropertiesInsert() throws SQLException {
+    public void shouldGetPropertiesInsert() throws SQLException {
         DatabaseManager.connection = null;
         in.add("sqlcmd|postgres|yes");
         in.add("name/Test");
@@ -108,7 +106,7 @@ public class ProcessTest {
         assertTrue(EqualsBuilder.reflectionEquals(insertColumnDefinitions, insertColumnDefinitionProvider.getProperties(rs)));
     }
     @Test
-    public void shouldNotNullGetPropertiesCreate() throws SQLException {
+    public void shouldGetPropertiesCreate() throws SQLException {
         in.add("name/text");
         List<CreateColumnDefinition> createColumnDefinitions = new ArrayList<>();
         for (int i = 0; i < 1; i++) {
@@ -133,35 +131,56 @@ public class ProcessTest {
         InsertTableQueryBuilder insertTableQueryBuilder = new InsertTableQueryBuilder();
         assertTrue(insertTableQueryBuilder.queryBuilder("first", rs));
     }
-//    @Test
-//    public void shouldGetAllColumnNames() throws SQLException {
-//        ChangeTable changeTable = new ChangeTable();
-//        Find.selectedTableName = "user";
-//        String columnsName = "(name,password,id)";
-//        Statement stmt = DatabaseManager.getConnection().createStatement();
-//        ResultSet rs = stmt.executeQuery("SELECT * FROM public." + Find.selectedTableName);
-//        assertEquals(columnsName, changeTable.getAllColumnNames(rs));
-//    }
-//    @Test
-//    public void shouldAddRow() throws SQLException {
-//        in.add("Tom manager");
-//        ChangeTable changeTable = new ChangeTable();
-//        Find.selectedTableName = "employee";
-//        assertTrue( changeTable.addRow());
-//    }
-//    @Test
-//    public void shouldRewrite() throws SQLException {
-//        in.add("Test");
-//        Find.selectedTableName = "user";
-//        ChangeTable changeTable = new ChangeTable();
-//        assertEquals("Test",changeTable.rewrite(1, "1"));
-//    }
-//    @Test
-//    public void isSelectedTableName() throws SQLException, ClassNotFoundException {
-//        Find.selectedTableName = null;
-//        in.add("user");
-//        String selectedTableName = "user";
-//        Change change = new Change();
-//        assertEquals(selectedTableName, change.isSelectedTableName("sqlcmd"));
-//    }
+    @Test
+    public void shouldGetPropertiesDelete() throws SQLException {
+        in.add("name/Test");
+        List<InsertUpdateDeleteColumnDefinition> deleteColumnDefinitions = new ArrayList<>();
+        InsertUpdateDeleteColumnDefinition deleteDeleteColumnDefinition = InsertUpdateDeleteColumnDefinition.builder()
+                .name("name")
+                .value("Test")
+                .build();
+        deleteColumnDefinitions.add(deleteDeleteColumnDefinition);
+        DeleteProvider deleteProvider = new DeleteProvider();
+        assertTrue(EqualsBuilder.reflectionEquals(deleteColumnDefinitions, deleteProvider.getProperties()));
+    }
+    @Test
+    public void shouldBuildExecuteQueryDelete() throws SQLException {
+        DatabaseManager.connection = null;
+        in.add("sqlcmd|postgres|yes");
+        in.add("name/Test");
+        Statement statement = DatabaseManager.getConnection().createStatement();
+
+        DeleteTableQueryBuilder deleteTableQueryBuilder = new DeleteTableQueryBuilder();
+        assertTrue(deleteTableQueryBuilder.queryBuilder("first"));
+    }
+    @Test
+    public void shouldGetPropertiesUpdate() throws SQLException {
+        DatabaseManager.connection = null;
+        in.add("sqlcmd|postgres|yes");
+        in.add("name/Test");
+        in.add("age/0");
+        Statement statement = DatabaseManager.getConnection().createStatement();
+        ResultSet rs = statement.executeQuery("SELECT * FROM public." + "first");
+        List<InsertUpdateDeleteColumnDefinition> updateColumnDefinitions = new ArrayList<>();
+        for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
+            InsertUpdateDeleteColumnDefinition updateDeleteColumnDefinition = InsertUpdateDeleteColumnDefinition.builder()
+                    .name("name")
+                    .value("Test")
+                    .build();
+            updateColumnDefinitions.add(updateDeleteColumnDefinition);
+        }
+        UpdateProvider updateProvider = new UpdateProvider();
+        assertTrue(EqualsBuilder.reflectionEquals(updateColumnDefinitions, updateProvider.getProperties(rs)));
+    }
+    @Test
+    public void shouldBuildExecuteQueryUpdate() throws SQLException {
+        DatabaseManager.connection = null;
+        in.add("sqlcmd|postgres|yes");
+        in.add("name/Test");
+        in.add("age/10");
+        Statement statement = DatabaseManager.getConnection().createStatement();
+        ResultSet rs = statement.executeQuery("SELECT * FROM public." + "first");
+        UpdateTableQueryBuilder updateTableQueryBuilder = new UpdateTableQueryBuilder();
+        assertTrue(updateTableQueryBuilder.queryBuilder("first", rs, 2));
+    }
 }
