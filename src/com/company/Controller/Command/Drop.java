@@ -8,8 +8,14 @@ import java.sql.SQLException;
 /**
  * Created by yulia on 21.02.17.
  */
-public class Drop implements Command {
+public class Drop extends AbstractCommand {
 
+    public Drop() {
+    }
+
+    public Drop(DatabaseManager databaseManager) {
+        super(databaseManager);
+    }
 
     @Override
     public boolean shouldProcess(String command) {
@@ -21,7 +27,7 @@ public class Drop implements Command {
         DatabasePropertiesProvider databasePropertiesProvider = new DatabasePropertiesProvider();
         String tableName = databasePropertiesProvider.getTableName();
         String sql = "DROP TABLE public." + tableName;
-        DatabaseManager.getStatement().executeUpdate(sql);
+        getDatabaseManager().getStatement().executeUpdate(sql);
         System.out.println(tableName + " is dropped");
     }
 }

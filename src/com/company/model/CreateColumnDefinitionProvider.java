@@ -9,7 +9,7 @@ import java.util.List;
  * Created by yulia on 21.02.17.
  */
 public class CreateColumnDefinitionProvider {
-    protected List getProperties(Integer columnNumber) {
+    public List getProperties(Integer columnNumber) {
         java.util.List<CreateColumnDefinition> columnDefinitions = new ArrayList<>();
         for (int i = 0; i < columnNumber; i++) {
             System.out.println("Now enter column's name and type of this column: <name/type>");

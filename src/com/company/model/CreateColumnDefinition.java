@@ -27,10 +27,6 @@ public class CreateColumnDefinition {
         return dataType;
     }
 
-    public boolean isNullable() {
-        return nullable;
-    }
-
     public String getDefaultValue() {
         return defaultValue;
     }

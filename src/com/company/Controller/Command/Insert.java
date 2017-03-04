@@ -10,7 +10,15 @@ import java.sql.SQLException;
 /**
  * Created by yulia on 21.02.17.
  */
-public class Insert implements Command {
+public class Insert extends AbstractCommand {
+
+    public Insert() {
+    }
+
+    public Insert(DatabaseManager databaseManager) {
+        super(databaseManager);
+    }
+
     @Override
     public boolean shouldProcess(String command) {
         return "insert".equals(command);
@@ -20,9 +28,9 @@ public class Insert implements Command {
     public void process(String command) throws SQLException, ClassNotFoundException {
         DatabasePropertiesProvider databasePropertiesProvider = new DatabasePropertiesProvider();
         String tableName = databasePropertiesProvider.getTableName();
-        ResultSet rs = DatabaseManager.getStatement().executeQuery("SELECT * FROM public." + tableName);
+        ResultSet rs = getDatabaseManager().getStatement().executeQuery("SELECT * FROM public." + tableName);
         InsertTableQueryBuilder insertTableQueryBuilder = new InsertTableQueryBuilder();
-        insertTableQueryBuilder.queryBuilder(tableName, rs);
-        System.out.println("Your data are added");
+        insertTableQueryBuilder.queryBuilderExecute(tableName, rs);
+        System.out.println("Your data were added");
     }
 }

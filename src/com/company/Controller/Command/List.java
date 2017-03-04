@@ -10,7 +10,14 @@ import java.sql.SQLException;
 /**
  * Created by yulia on 06.11.16.
  */
-public class List implements Command {
+public class List extends AbstractCommand {
+
+    public List() {
+    }
+
+    public List(DatabaseManager databaseManager) {
+        super(databaseManager);
+    }
 
     @Override
     public boolean shouldProcess(String command) {

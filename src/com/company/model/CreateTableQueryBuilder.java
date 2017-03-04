@@ -9,21 +9,30 @@ import java.util.List;
  */
 public class CreateTableQueryBuilder {
 
-    public void queryBuilder(Integer columnNumber, String tableName) throws SQLException {
+    DatabaseManager databaseManager;
+
+    public boolean queryBuildExecute(Integer columnNumber, String tableName) throws SQLException {
+        databaseManager = new DatabaseManager();
         String properties = "";
         CreateColumnDefinitionProvider columnDefinitionProvider = new CreateColumnDefinitionProvider();
         List<CreateColumnDefinition> columnDefinition = columnDefinitionProvider.getProperties(columnNumber);
-        for (int i = 0; i < columnDefinition.size(); i++){
-            if(i == 0){
-                properties += columnDefinition.get(i).getName() + " " + columnDefinition.get(i).getDataType() + " " + columnDefinition.get(i).getDefaultValue();
-            }
-            else {
-                properties += "," + " " + columnDefinition.get(i).getName() + " " + columnDefinition.get(i).getDataType() + " " + columnDefinition.get(i).getDefaultValue();
-            }
-        }
+        properties = getString(properties, columnDefinition);
         String sql = "CREATE TABLE public." + tableName + "(" + properties + ")";
-        DatabaseManager.getStatement().executeUpdate(sql);
+        databaseManager.getStatement().executeUpdate(sql);
+        return true;
     }
 
-
+    private String getString(String properties, List<CreateColumnDefinition> columnDefinition) {
+        for (int i = 0; i < columnDefinition.size(); i++){
+            if(i == 0){
+                properties += columnDefinition.get(i).getName() + " " + columnDefinition.get(i).getDataType()
+                        + " " + columnDefinition.get(i).getDefaultValue();
+            }
+            else {
+                properties += "," + " " + columnDefinition.get(i).getName() + " "
+                        + columnDefinition.get(i).getDataType() + " " + columnDefinition.get(i).getDefaultValue();
+            }
+        }
+        return properties;
+    }
 }

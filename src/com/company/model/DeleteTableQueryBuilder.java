@@ -7,13 +7,16 @@ import java.util.List;
  * Created by yulia on 23.02.17.
  */
 public class DeleteTableQueryBuilder {
-    public void queryBuilder(String tableName) throws SQLException {
-        DeleteColumnDefinitionProvider deleteColumnDefinitionProvider = new DeleteColumnDefinitionProvider();
-        List<InsertUpdateDeleteColumnDefinition> deleteColumnDefinition = deleteColumnDefinitionProvider.getProperties();
+    DatabaseManager databaseManager;
+    public boolean queryBuilder(String tableName) throws SQLException {
+        databaseManager = new DatabaseManager();
+        DeleteProvider deleteProvider = new DeleteProvider();
+        List<InsertUpdateDeleteColumnDefinition> deleteColumnDefinition = deleteProvider.getProperties();
         String propertiesColumn = getColumnName(deleteColumnDefinition);
         String propertiesValue = getValue(deleteColumnDefinition);
         String sql = "DELETE FROM public." + tableName + " " + "WHERE" + " " + propertiesColumn + " " + "=" + propertiesValue ;
-        DatabaseManager.getStatement().executeUpdate(sql);
+        databaseManager.getStatement().executeUpdate(sql);
+        return true;
     }
 
     private String getValue( List<InsertUpdateDeleteColumnDefinition> updateColumnDefinition) {

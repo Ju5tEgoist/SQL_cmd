@@ -10,12 +10,9 @@ import java.sql.SQLException;
  */
 public class MainCommand {
 
-
-
-    public boolean doCommand() throws SQLException, ClassNotFoundException {
+    public void doCommand() throws SQLException, ClassNotFoundException {
         System.out.println( "Enter the command, which you want to do or 'help'");
         getDetermineCommand();
-        return true;
     }
 
     public void getDetermineCommand() throws SQLException, ClassNotFoundException {
@@ -48,6 +45,5 @@ public class MainCommand {
         }
         System.out.println( "Enter the command, which you want to do or 'help'");
             getDetermineCommand();
-
     }
 }

@@ -11,7 +11,7 @@ public class DatabaseManager {
     public static Connection connection;
     private static Statement stmt;
 
-    private static Connection connect(String database, String user, String password) throws SQLException, ClassNotFoundException {
+    public static Connection connect(String database, String user, String password) throws SQLException, ClassNotFoundException {
 
             try {
                 Class.forName("org.postgresql.Driver");
@@ -35,7 +35,7 @@ public class DatabaseManager {
         return connection;
     }
 
-    public static Statement getStatement(){
+    public Statement getStatement(){
         return stmt;
     }
 

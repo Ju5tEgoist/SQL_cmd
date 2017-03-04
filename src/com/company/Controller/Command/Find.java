@@ -1,5 +1,6 @@
 package com.company.Controller.Command;
 
+import com.company.model.DatabaseManager;
 import com.company.model.FindProperties;
 import com.company.model.FindProvider;
 import com.company.view.ConsoleReader;
@@ -8,9 +9,17 @@ import java.sql.SQLException;
 /**
  * Created by yulia on 06.11.16.
  */
-public class Find implements Command {
+public class Find extends AbstractCommand {
+
+    public Find() {
+    }
+
+    public Find(DatabaseManager databaseManager) {
+        super(databaseManager);
+    }
 
     public static String selectedTableName;
+
     @Override
     public boolean shouldProcess(String command) {
         return command != null && command.startsWith("find");

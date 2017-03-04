@@ -1,11 +1,20 @@
 package com.company.Controller.Command;
 
+import com.company.model.DatabaseManager;
+
 import java.sql.SQLException;
 
 /**
  * Created by yulia on 08.11.16.
  */
-public class Help implements Command {
+public class Help extends AbstractCommand {
+
+    public Help() {
+    }
+
+    public Help(DatabaseManager databaseManager) {
+        super(databaseManager);
+    }
 
     public static final String INFO = "All available command: " +
             "\nhelp - show all command" +

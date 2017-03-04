@@ -10,8 +10,9 @@ import java.util.List;
 /**
  * Created by yulia on 23.02.17.
  */
-public class UpdateColumnDefinitionProvider {
-    protected List getProperties( ResultSet rs) throws SQLException {
+public class UpdateProvider {
+    public List getProperties( ResultSet rs) throws SQLException {
+
         List<InsertUpdateDeleteColumnDefinition> updateDeleteColumnDefinitions = new ArrayList<>();
         ConsoleReader consoleReader = new ConsoleReader();
         for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {

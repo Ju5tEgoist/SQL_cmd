@@ -3,7 +3,7 @@ package com.company.Controller.Command;
 /**
  * Created by yulia on 07.11.16.
  */
-public class Exit implements Command {
+public class Exit extends AbstractCommand {
 
     @Override
     public boolean shouldProcess(String command) {

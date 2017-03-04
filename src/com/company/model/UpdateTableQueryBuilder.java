@@ -8,16 +8,19 @@ import java.util.List;
  * Created by yulia on 23.02.17.
  */
 public class UpdateTableQueryBuilder {
-    public void queryBuilder(String tableName, ResultSet rs, int columnNumber) throws SQLException {
-        UpdateColumnDefinitionProvider updateColumnDefinitionProvider = new UpdateColumnDefinitionProvider();
-        List<InsertUpdateDeleteColumnDefinition> updateColumnDefinition = updateColumnDefinitionProvider.getProperties(rs);
+    DatabaseManager databaseManager;
+    public boolean queryBuilder(String tableName, ResultSet rs, int columnNumber) throws SQLException {
+        databaseManager = new DatabaseManager();
+        UpdateProvider updateProvider = new UpdateProvider();
+        List<InsertUpdateDeleteColumnDefinition> updateColumnDefinition = updateProvider.getProperties(rs);
         String propertiesColumn = getColumnName(updateColumnDefinition, columnNumber);
         String propertiesNeighbourColumn = getColumnName(updateColumnDefinition, getNeighborColumnNumber(columnNumber));
         String propertiesValue = getValue(updateColumnDefinition, columnNumber);
         String propertiesNeighbourValue = getValue(updateColumnDefinition, getNeighborColumnNumber(columnNumber));
-        String sql = "UPDATE public." + tableName + " " + "SET" + " " + propertiesColumn + " " + "=" + " " +
-                propertiesValue + " " + "WHERE" + " " + propertiesNeighbourColumn + " " + "=" + propertiesNeighbourValue ;
-        DatabaseManager.getStatement().executeUpdate(sql);
+        String sql = "UPDATE public." + tableName + " " + "SET" + " " + propertiesColumn + " " + "=" + " "
+                + propertiesValue + " " + "WHERE" + " " + propertiesNeighbourColumn + " " + "=" + propertiesNeighbourValue ;
+        databaseManager.getStatement().executeUpdate(sql);
+        return true;
     }
 
     private String getValue( List<InsertUpdateDeleteColumnDefinition> updateColumnDefinition, int columnNumber) {

@@ -8,7 +8,12 @@ import java.sql.SQLException;
 /**
  * Created by yulia on 06.11.16.
  */
-public class Connect implements Command {
+public class Connect extends AbstractCommand {
+
+    public Connect() {}
+    public Connect(DatabaseManager databaseManager) {
+        super(databaseManager);
+    }
 
     @Override
     public boolean shouldProcess(String command) {

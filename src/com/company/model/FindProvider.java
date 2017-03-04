@@ -1,5 +1,7 @@
 package com.company.model;
 
+import com.company.view.TablePresentation;
+
 import java.sql.SQLException;
 
 /**
@@ -9,7 +11,7 @@ public class FindProvider {
 
     public String getSelectedTableName(String[] tableNames, String result, String[] parts, String selectedTableName) throws SQLException {
         FindProperties findProperties = new FindProperties();
-        DatabasePropertiesProvider databasePropertiesProvider = new DatabasePropertiesProvider();
+        TablePresentation tablePresentation = new TablePresentation();
         for (String tableName : tableNames) {
             String expectedFirstCase = "find" + " " + tableName;
             if (result.equals(expectedFirstCase)) {
@@ -18,17 +20,15 @@ public class FindProvider {
             }
 
         }
-        if(selectedTableName == null){
+        if (selectedTableName == null) {
             selectedTableName = findProperties.getLimitOffset(tableNames, result, parts);
-            if(selectedTableName == null){
+            if (selectedTableName == null) {
                 System.out.println("Can not find table with this name. Try again");
+            } else {
+                tablePresentation.showTable(selectedTableName);
             }
-            else {
-                databasePropertiesProvider.getTableForView(selectedTableName);
-            }
-        }
-        else {
-            databasePropertiesProvider.getTableForView(selectedTableName);
+        } else {
+            tablePresentation.showTable(selectedTableName);
         }
         return selectedTableName;
     }

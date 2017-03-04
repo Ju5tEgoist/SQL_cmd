@@ -10,7 +10,7 @@ import java.util.List;
  * Created by yulia on 22.02.17.
  */
 public class InsertColumnDefinitionProvider {
-    protected List getProperties( ResultSet rs) throws SQLException {
+    public List getProperties( ResultSet rs) throws SQLException {
         List<InsertUpdateDeleteColumnDefinition> insertColumnDefinitions = new ArrayList<>();
         DatabasePropertiesProvider databasePropertiesProvider = new DatabasePropertiesProvider();
         System.out.println("All column's names in this table: " + databasePropertiesProvider.getAllColumnsNames(rs));

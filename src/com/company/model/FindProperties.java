@@ -44,6 +44,7 @@ public class FindProperties {
         String[] tableNames;
         String concatenatedTableNames = "";
         Connection connect = DatabaseManager.getConnection();
+        System.out.println(database);
         ResultSet list = connect.getMetaData().getTables(database, "public", "%", null);
         while (list.next()) {
             String tableName = list.getString(3);

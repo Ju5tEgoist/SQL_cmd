@@ -1,6 +1,5 @@
 package com.company;
 
-import com.company.Controller.Command.Update;
 import com.company.model.*;
 import com.company.view.CustomInputStream;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -129,7 +128,7 @@ public class ProcessTest {
         Statement statement = DatabaseManager.getConnection().createStatement();
         ResultSet rs = statement.executeQuery("SELECT * FROM public." + "first");
         InsertTableQueryBuilder insertTableQueryBuilder = new InsertTableQueryBuilder();
-        assertTrue(insertTableQueryBuilder.queryBuilder("first", rs));
+        assertTrue(insertTableQueryBuilder.queryBuilderExecute("first", rs));
     }
     @Test
     public void shouldGetPropertiesDelete() throws SQLException {
