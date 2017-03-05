@@ -22,7 +22,7 @@ public class Connect extends AbstractCommand {
     @Override
     public void execute(String command) throws SQLException, ClassNotFoundException {
         boolean connectionSuccessful = false;
-        System.out.println("Please, write name of database in which you want to work, username and password in format: nameOfDataBase|username|password ");
+        System.out.println("Please, write name of database in which you want to work, username and password in format: dataBaseName|username|password ");
         while (!connectionSuccessful) {
             try {
                 connectionSuccessful = isConnectionSuccessful();

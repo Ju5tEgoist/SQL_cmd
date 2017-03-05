@@ -2,7 +2,7 @@ package com.company;
 
 import com.company.model.*;
 import com.company.view.CustomInputStream;
-import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
