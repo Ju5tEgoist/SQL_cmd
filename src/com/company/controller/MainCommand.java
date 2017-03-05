@@ -1,6 +1,7 @@
-package com.company.Controller;
+package com.company.controller;
 
-import com.company.Controller.Command.*;
+import com.company.controller.command.*;
+import com.company.model.exception.CommandExecutionException;
 import com.company.view.ScannerConsoleReader;
 
 import java.sql.SQLException;
@@ -10,12 +11,12 @@ import java.sql.SQLException;
  */
 public class MainCommand {
 
-    public void perform() throws SQLException, ClassNotFoundException {
+    public void perform() throws CommandExecutionException, SQLException {
         System.out.println( "Enter the command, which you want to do or 'help'");
         getCommand();
     }
 
-    public void getCommand() throws SQLException, ClassNotFoundException {
+    public void getCommand() throws CommandExecutionException, SQLException {
         ScannerConsoleReader scannerConsoleReader = new ScannerConsoleReader();
         String inputCommand = scannerConsoleReader.read();
         boolean isCorrectCommand = false;
@@ -33,10 +34,10 @@ public class MainCommand {
                 new Delete()
         };
         for (Command command : commands) {
-            if (command.shouldProcess(inputCommand))
+            if (command.shouldExecute(inputCommand))
             {
                 isCorrectCommand = true;
-                command.execute(inputCommand);
+                command.execute();
                 break;
             }
         }

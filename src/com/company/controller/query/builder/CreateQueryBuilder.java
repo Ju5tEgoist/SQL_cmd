@@ -1,28 +1,25 @@
-package com.company.model;
+package com.company.controller.query.builder;
 
-import java.sql.SQLException;
+import com.company.controller.query.parameter.CreateParameters;
+import com.company.controller.query.parameter.provider.ClearParametersProvider;
+import com.company.model.CreateColumnDefinition;
+import com.company.model.CreateColumnDefinitionPropertiesProvider;
 
 import java.util.List;
 
 /**
  * Created by yulia on 21.02.17.
  */
-public class CreateTableQueryBuilder {
-
-    public boolean queryBuild(Integer columnNumber, String tableName) throws SQLException {
-
+public class CreateQueryBuilder implements QueryBuilder<CreateParameters>{
+    @Override
+    public String build(CreateParameters createParameters) {
         String properties = "";
         CreateColumnDefinitionPropertiesProvider columnDefinitionProvider = new CreateColumnDefinitionPropertiesProvider();
-        List<CreateColumnDefinition> columnDefinition = columnDefinitionProvider.getProperties(columnNumber);
+        List<CreateColumnDefinition> columnDefinition = columnDefinitionProvider.getProperties(createParameters.getColumnNumber());
         properties = getProperties(properties, columnDefinition);
-        String sql = "CREATE TABLE public." + tableName + "(" + properties + ")";
-        queryExecute(sql);
-        return true;
-    }
-
-    private void queryExecute(String sql) throws SQLException {
-        DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.getStatement().executeUpdate(sql);
+        ClearParametersProvider clearParametersProvider = new ClearParametersProvider();
+        String sql = "CREATE TABLE " + clearParametersProvider.getParameters().getTableName() + "(" + properties + ")";
+        return sql;
     }
 
     private String getProperties(String properties, List<CreateColumnDefinition> columnDefinition) {

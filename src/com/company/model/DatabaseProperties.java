@@ -1,18 +1,12 @@
 package com.company.model;
 
-import com.company.view.ScannerConsoleReader;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by yulia on 02.10.16.
  */
 public class DatabaseProperties {
-
-    public String getTableName(){
-        System.out.println("Enter table name");
-        ScannerConsoleReader scannerConsoleReader = new ScannerConsoleReader();
-        return scannerConsoleReader.read();
-    }
 
     public String getAllColumnsNames(ResultSet rs) throws SQLException {
         String columnNames = "";

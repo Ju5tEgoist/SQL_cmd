@@ -1,20 +1,9 @@
-package com.company.Controller.Command;
-
-import com.company.model.DatabaseManager;
-
-import java.sql.SQLException;
+package com.company.controller.command;
 
 /**
  * Created by yulia on 08.11.16.
  */
-public class Help extends AbstractCommand {
-
-    public Help() {
-    }
-
-    public Help(DatabaseManager databaseManager) {
-        super(databaseManager);
-    }
+public class Help implements Command {
 
     private static final String INFO = "All available command: " +
             "\nhelp - show all command" +
@@ -30,13 +19,12 @@ public class Help extends AbstractCommand {
             "\nexit";
 
     @Override
-    public boolean shouldProcess(String command) {
+    public boolean shouldExecute(String command) {
         return "help".equals(command);
     }
 
     @Override
-    public void execute(String command) throws SQLException, ClassNotFoundException {
+    public void execute(){
             System.out.println(INFO);
-
     }
 }

@@ -2,7 +2,10 @@ package com.company.model;
 
 import com.company.view.ScannerConsoleReader;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Created by yulia on 28.09.16.
@@ -11,7 +14,7 @@ public class DatabaseManager {
     public static Connection connection;
     private static Statement stmt;
 
-    private static Connection connect(String database, String user, String password) throws SQLException {
+    public static Connection connect(String database, String user, String password) throws SQLException {
 
             try {
                 Class.forName("org.postgresql.Driver");

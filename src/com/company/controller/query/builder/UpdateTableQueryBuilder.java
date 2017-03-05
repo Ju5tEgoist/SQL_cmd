@@ -1,4 +1,8 @@
-package com.company.model;
+package com.company.controller.query.builder;
+
+import com.company.controller.query.executor.UpdateSqlQueryExecutor;
+import com.company.model.InsertUpdateDeleteColumnDefinition;
+import com.company.model.UpdateProvider;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,22 +13,17 @@ import java.util.List;
  */
 public class UpdateTableQueryBuilder {
 
-    public boolean queryBuild(String tableName, ResultSet rs, int columnNumber) throws SQLException {
+    public String queryBuild(String tableName, ResultSet rs, int columnNumber) throws SQLException {
         UpdateProvider updateProvider = new UpdateProvider();
         List<InsertUpdateDeleteColumnDefinition> updateColumnDefinition = updateProvider.getProperties(rs);
         String propertiesColumn = getColumnName(updateColumnDefinition, columnNumber);
         String propertiesNeighbourColumn = getColumnName(updateColumnDefinition, getNeighborColumnNumber(columnNumber));
         String propertiesValue = getValue(updateColumnDefinition, columnNumber);
         String propertiesNeighbourValue = getValue(updateColumnDefinition, getNeighborColumnNumber(columnNumber));
-        String sql = "UPDATE public." + tableName + " " + "SET" + " " + propertiesColumn + " " + "=" + " "
+        String sql = "UPDATE " + tableName + " " + "SET" + " " + propertiesColumn + " " + "=" + " "
                 + propertiesValue + " " + "WHERE" + " " + propertiesNeighbourColumn + " " + "=" + propertiesNeighbourValue ;
-        queryExecute(sql);
-        return true;
-    }
-
-    private void queryExecute(String sql) throws SQLException {
-        DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.getStatement().executeUpdate(sql);
+        new UpdateSqlQueryExecutor().execute(sql);
+        return sql;
     }
 
     private String getValue( List<InsertUpdateDeleteColumnDefinition> updateColumnDefinition, int columnNumber) {

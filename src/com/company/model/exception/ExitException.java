@@ -1,4 +1,4 @@
-package com.company.Controller.Command;
+package com.company.model.exception;
 
 /**
  * Created by yulia on 07.11.16.

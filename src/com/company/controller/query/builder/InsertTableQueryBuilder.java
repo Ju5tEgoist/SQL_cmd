@@ -1,4 +1,9 @@
-package com.company.model;
+package com.company.controller.query.builder;
+
+import com.company.controller.query.parameter.Parameters;
+import com.company.model.DatabaseManager;
+import com.company.model.InsertColumnDefinitionProvider;
+import com.company.model.InsertUpdateDeleteColumnDefinition;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,21 +12,17 @@ import java.util.List;
 /**
  * Created by yulia on 22.02.17.
  */
-public class InsertTableQueryBuilder {
+public class InsertTableQueryBuilder implements QueryBuilder <Parameters> {
 
-    public boolean queryBuilderExecute(String tableName, ResultSet rs) throws SQLException {
+    @Override
+    public String build(Parameters parameters) throws SQLException {
+        ResultSet rs = new DatabaseManager().getStatement().executeQuery("SELECT * FROM " + parameters.getTableName());
         InsertColumnDefinitionProvider insertColumnDefinitionProvider = new InsertColumnDefinitionProvider();
         List<InsertUpdateDeleteColumnDefinition> insertColumnDefinition = insertColumnDefinitionProvider.getProperties(rs);
         String propertiesValue = getPropertiesValue(rs, insertColumnDefinition);
         String propertiesColumn = getPropertiesColumn(rs, insertColumnDefinition);
-        String sql = "INSERT INTO public." + tableName + " " + "(" + propertiesColumn + ")" + " " + "VALUES" + " " + "(" + propertiesValue + ")";
-        queryExecute(sql);
-        return true;
-    }
-
-    private void queryExecute(String sql) throws SQLException {
-        DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.getStatement().executeUpdate(sql);
+        return "INSERT INTO " + parameters.getTableName() + " " + "(" + propertiesColumn + ")" + " "
+                + "VALUES" + " " + "(" + propertiesValue + ")";
     }
 
     private String getPropertiesValue(ResultSet rs, List<InsertUpdateDeleteColumnDefinition> insertColumnDefinition) throws SQLException {

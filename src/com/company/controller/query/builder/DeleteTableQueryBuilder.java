@@ -1,4 +1,8 @@
-package com.company.model;
+package com.company.controller.query.builder;
+
+import com.company.controller.query.executor.DeleteExecutor;
+import com.company.model.DeleteColumnDefinitionProvider;
+import com.company.model.InsertUpdateDeleteColumnDefinition;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -9,19 +13,14 @@ import java.util.NoSuchElementException;
  */
 public class DeleteTableQueryBuilder {
 
-    public boolean queryBuild(String tableName) throws SQLException {
+    public boolean build(String tableName) throws SQLException {
         DeleteColumnDefinitionProvider deleteColumnDefinitionProvider = new DeleteColumnDefinitionProvider();
         List<InsertUpdateDeleteColumnDefinition> deleteColumnDefinition = deleteColumnDefinitionProvider.getProperties();
         String propertiesColumn = getColumnName(deleteColumnDefinition);
         String propertiesValue = getColumnValue(deleteColumnDefinition);
-        String sql = "DELETE FROM public." + tableName + " " + "WHERE" + " " + propertiesColumn + " " + "=" + propertiesValue ;
-        queryExecute(sql);
+        String sql = "DELETE FROM " + tableName + " " + "WHERE" + " " + propertiesColumn + " " + "=" + propertiesValue ;
+        new DeleteExecutor().execute(sql);
         return true;
-    }
-
-    private void queryExecute(String sql) throws SQLException {
-        DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.getStatement().executeUpdate(sql);
     }
 
     private String getColumnValue(List<InsertUpdateDeleteColumnDefinition> updateColumnDefinition) {

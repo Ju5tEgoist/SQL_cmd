@@ -1,6 +1,7 @@
 package com.company.model;
 
-import com.company.Controller.MainCommand;
+import com.company.controller.MainCommand;
+import com.company.model.exception.CommandExecutionException;
 
 import java.sql.SQLException;
 
@@ -15,7 +16,7 @@ public class Main {
         try {
             mainCommand.perform();
         }
-        catch (SQLException | ClassNotFoundException e){
+        catch (CommandExecutionException | SQLException e){
             System.out.println(e);
         }
     }
