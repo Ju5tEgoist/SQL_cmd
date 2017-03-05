@@ -25,12 +25,13 @@ public class List extends AbstractCommand {
     }
 
     @Override
-    public void process(String database) throws SQLException, ClassNotFoundException {
+    public void execute(String database) throws SQLException, ClassNotFoundException {
         Connection connect = DatabaseManager.getConnection();
         ResultSet list = connect.getMetaData().getTables(database, "public", "%", null);
         System.out.printf("List of all available tables: [");
+        int databaseIndex = 3;
         while (list.next()) {
-            String tableName = list.getString(3);
+            String tableName = list.getString(databaseIndex);
             System.out.print(tableName);
             System.out.print(list.isLast() ? "]" : ", ");
         }

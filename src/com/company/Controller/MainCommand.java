@@ -1,7 +1,7 @@
 package com.company.Controller;
 
 import com.company.Controller.Command.*;
-import com.company.view.ConsoleReader;
+import com.company.view.ScannerConsoleReader;
 
 import java.sql.SQLException;
 
@@ -10,15 +10,15 @@ import java.sql.SQLException;
  */
 public class MainCommand {
 
-    public void doCommand() throws SQLException, ClassNotFoundException {
+    public void perform() throws SQLException, ClassNotFoundException {
         System.out.println( "Enter the command, which you want to do or 'help'");
-        getDetermineCommand();
+        getCommand();
     }
 
-    public void getDetermineCommand() throws SQLException, ClassNotFoundException {
-        ConsoleReader consoleReader = new ConsoleReader();
-        String inputCommand = consoleReader.read();
-        boolean condition = false;
+    public void getCommand() throws SQLException, ClassNotFoundException {
+        ScannerConsoleReader scannerConsoleReader = new ScannerConsoleReader();
+        String inputCommand = scannerConsoleReader.read();
+        boolean isCorrectCommand = false;
         Command[] commands = {
                 new Help(),
                 new Connect(),
@@ -35,15 +35,15 @@ public class MainCommand {
         for (Command command : commands) {
             if (command.shouldProcess(inputCommand))
             {
-                condition = true;
-                command.process(inputCommand);
+                isCorrectCommand = true;
+                command.execute(inputCommand);
                 break;
             }
         }
-        if(!condition){
-            System.out.println("This command does not exist. Try again");
+        if(!isCorrectCommand){
+            System.out.println("Invalid command! Please try again.");
         }
         System.out.println( "Enter the command, which you want to do or 'help'");
-            getDetermineCommand();
+            getCommand();
     }
 }

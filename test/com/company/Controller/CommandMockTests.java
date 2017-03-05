@@ -27,7 +27,8 @@ public class CommandMockTests {
         in = new CustomInputStream();
         System.setIn(in);
         System.setOut(new PrintStream(out));
-        DatabaseManager.connect("sqlcmd", "postgres", "yes");
+        in.add("sqlcmd|postgres|yes");
+        DatabaseManager.getConnection();
     }
 
     private void isTrue(boolean value) {
@@ -38,9 +39,9 @@ public class CommandMockTests {
 
     private void verifyProcess(AbstractCommand spy, String command) {
         try {
-            doNothing().when(spy).process(command);
+            doNothing().when(spy).execute(command);
             spy.shouldProcess(command);
-            spy.process(command);
+            spy.execute(command);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -181,7 +182,7 @@ public class CommandMockTests {
     public void verifyMainCommand() throws SQLException, ClassNotFoundException {
         MainCommand mainCommand = new MainCommand();
         MainCommand spy = Mockito.spy(mainCommand);
-        doNothing().when(spy).doCommand();
-        doNothing().when(spy).getDetermineCommand();
+        doNothing().when(spy).perform();
+        doNothing().when(spy).getCommand();
     }
 }

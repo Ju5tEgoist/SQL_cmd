@@ -9,29 +9,28 @@ import java.util.List;
  */
 public class CreateTableQueryBuilder {
 
-    DatabaseManager databaseManager;
+    public boolean queryBuild(Integer columnNumber, String tableName) throws SQLException {
 
-    public boolean queryBuildExecute(Integer columnNumber, String tableName) throws SQLException {
-        databaseManager = new DatabaseManager();
         String properties = "";
-        CreateColumnDefinitionProvider columnDefinitionProvider = new CreateColumnDefinitionProvider();
+        CreateColumnDefinitionPropertiesProvider columnDefinitionProvider = new CreateColumnDefinitionPropertiesProvider();
         List<CreateColumnDefinition> columnDefinition = columnDefinitionProvider.getProperties(columnNumber);
-        properties = getString(properties, columnDefinition);
+        properties = getProperties(properties, columnDefinition);
         String sql = "CREATE TABLE public." + tableName + "(" + properties + ")";
-        databaseManager.getStatement().executeUpdate(sql);
+        queryExecute(sql);
         return true;
     }
 
-    private String getString(String properties, List<CreateColumnDefinition> columnDefinition) {
+    private void queryExecute(String sql) throws SQLException {
+        DatabaseManager databaseManager = new DatabaseManager();
+        databaseManager.getStatement().executeUpdate(sql);
+    }
+
+    private String getProperties(String properties, List<CreateColumnDefinition> columnDefinition) {
         for (int i = 0; i < columnDefinition.size(); i++){
-            if(i == 0){
-                properties += columnDefinition.get(i).getName() + " " + columnDefinition.get(i).getDataType()
-                        + " " + columnDefinition.get(i).getDefaultValue();
-            }
-            else {
-                properties += "," + " " + columnDefinition.get(i).getName() + " "
-                        + columnDefinition.get(i).getDataType() + " " + columnDefinition.get(i).getDefaultValue();
-            }
+            properties +=  i > 0 ?  "," + " " + columnDefinition.get(i).getName() + " "
+                 + columnDefinition.get(i).getDataType() + " " + columnDefinition.get(i).getDefaultValue() :
+                 columnDefinition.get(i).getName() + " " + columnDefinition.get(i).getDataType()
+                            + " " + columnDefinition.get(i).getDefaultValue();
         }
         return properties;
     }

@@ -1,17 +1,17 @@
 package com.company.model;
 
-import com.company.view.ConsoleReader;
+import com.company.view.ScannerConsoleReader;
 import java.sql.*;
 
 /**
  * Created by yulia on 02.10.16.
  */
-public class DatabasePropertiesProvider {
+public class DatabaseProperties {
 
     public String getTableName(){
         System.out.println("Enter table name");
-        ConsoleReader consoleReader = new ConsoleReader();
-        return consoleReader.read();
+        ScannerConsoleReader scannerConsoleReader = new ScannerConsoleReader();
+        return scannerConsoleReader.read();
     }
 
     public String getAllColumnsNames(ResultSet rs) throws SQLException {

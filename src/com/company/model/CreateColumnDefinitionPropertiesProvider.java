@@ -1,6 +1,6 @@
 package com.company.model;
 
-import com.company.view.ConsoleReader;
+import com.company.view.ScannerConsoleReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,13 +8,13 @@ import java.util.List;
 /**
  * Created by yulia on 21.02.17.
  */
-public class CreateColumnDefinitionProvider {
-    public List getProperties(Integer columnNumber) {
+public class CreateColumnDefinitionPropertiesProvider {
+    public List<CreateColumnDefinition> getProperties(Integer columnNumber) {
         java.util.List<CreateColumnDefinition> columnDefinitions = new ArrayList<>();
         for (int i = 0; i < columnNumber; i++) {
             System.out.println("Now enter column's name and type of this column: <name/type>");
-            ConsoleReader consoleReader = new ConsoleReader();
-            String[] inputParts = consoleReader.read().split("/");
+            ScannerConsoleReader scannerConsoleReader = new ScannerConsoleReader();
+            String[] inputParts = scannerConsoleReader.read().split("/");
             CreateColumnDefinition columnDefinition = CreateColumnDefinition.builder()
                     .name(inputParts[0])
                     .nullable(false)

@@ -1,10 +1,10 @@
 package com.company.Controller.Command;
 
-import com.company.model.DatabasePropertiesProvider;
+import com.company.model.DatabaseProperties;
 import com.company.model.DatabaseManager;
 import com.company.model.UpdateTableQueryBuilder;
-import com.company.view.ConsoleReader;
-import com.company.view.TablePresentation;
+import com.company.view.ScannerConsoleReader;
+import com.company.view.TablePresenter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,23 +27,23 @@ public class Update extends AbstractCommand {
     }
 
     @Override
-    public void process(String command) throws SQLException, ClassNotFoundException {
-        DatabasePropertiesProvider databasePropertiesProvider = new DatabasePropertiesProvider();
-        String tableName = databasePropertiesProvider.getTableName();
-        TablePresentation tablePresentation = new TablePresentation();
+    public void execute(String command) throws SQLException, ClassNotFoundException {
+        DatabaseProperties databaseProperties = new DatabaseProperties();
+        String tableName = databaseProperties.getTableName();
+        TablePresenter tablePresenter = new TablePresenter();
         System.out.println("This table: ");
         ResultSet rs = getResultSet(tableName);
-        tablePresentation.showTable(tableName);
+        tablePresenter.showTable(tableName);
         int columnNumber = getColumnNumber();
         UpdateTableQueryBuilder updateTableQueryBuilder = new UpdateTableQueryBuilder();
-        updateTableQueryBuilder.queryBuilder(tableName, rs, columnNumber);
-        tablePresentation.showTable(tableName);
+        updateTableQueryBuilder.queryBuild(tableName, rs, columnNumber);
+        tablePresenter.showTable(tableName);
     }
 
     private int getColumnNumber() {
         System.out.println("Now enter the column number in which you want change value");
-        ConsoleReader consoleReader = new ConsoleReader();
-        return Integer.valueOf(consoleReader.read());
+        ScannerConsoleReader scannerConsoleReader = new ScannerConsoleReader();
+        return Integer.valueOf(scannerConsoleReader.read());
     }
 
     private ResultSet getResultSet(String tableName) throws SQLException {

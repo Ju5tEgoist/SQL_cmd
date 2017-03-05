@@ -16,7 +16,7 @@ public class Help extends AbstractCommand {
         super(databaseManager);
     }
 
-    public static final String INFO = "All available command: " +
+    private static final String INFO = "All available command: " +
             "\nhelp - show all command" +
             "\nconnect - connect to database" +
             "\nclear - clears the contents of the specified table" +
@@ -35,7 +35,7 @@ public class Help extends AbstractCommand {
     }
 
     @Override
-    public void process(String command) throws SQLException, ClassNotFoundException {
+    public void execute(String command) throws SQLException, ClassNotFoundException {
             System.out.println(INFO);
 
     }

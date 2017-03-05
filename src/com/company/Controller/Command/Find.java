@@ -2,8 +2,7 @@ package com.company.Controller.Command;
 
 import com.company.model.DatabaseManager;
 import com.company.model.FindProperties;
-import com.company.model.FindProvider;
-import com.company.view.ConsoleReader;
+import com.company.view.ScannerConsoleReader;
 import java.sql.SQLException;
 
 /**
@@ -18,22 +17,19 @@ public class Find extends AbstractCommand {
         super(databaseManager);
     }
 
-    public static String selectedTableName;
-
     @Override
     public boolean shouldProcess(String command) {
-        return command != null && command.startsWith("find");
+        return command.startsWith("find");
     }
 
     @Override
-    public void process(String database) throws SQLException {
+    public void execute(String database) throws SQLException {
         FindProperties findProperties = new FindProperties();
         System.out.println("For view table, please, enter the name: find <tableName> or find <tableName LIMIT/OFFSET>");
         String[] tableNames = findProperties.getTableNames(database);
-        ConsoleReader consoleReader = new ConsoleReader();
-        String result = consoleReader.read();
+        ScannerConsoleReader scannerConsoleReader = new ScannerConsoleReader();
+        String result = scannerConsoleReader.read();
         String[] parts = result.split(" ") ;
-        FindProvider findProvider = new FindProvider();
-        selectedTableName = findProvider.getSelectedTableName(tableNames, result, parts, selectedTableName);
+        findProperties.getSelectedTableName(tableNames, result, parts);
     }
 }

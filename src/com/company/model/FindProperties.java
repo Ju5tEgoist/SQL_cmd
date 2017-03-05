@@ -1,6 +1,8 @@
 package com.company.model;
 
 
+import com.company.view.TablePresenter;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,7 +46,6 @@ public class FindProperties {
         String[] tableNames;
         String concatenatedTableNames = "";
         Connection connect = DatabaseManager.getConnection();
-        System.out.println(database);
         ResultSet list = connect.getMetaData().getTables(database, "public", "%", null);
         while (list.next()) {
             String tableName = list.getString(3);
@@ -53,5 +54,30 @@ public class FindProperties {
         tableNames = concatenatedTableNames.split(" ") ;
 
         return tableNames;
+    }
+
+    public String getSelectedTableName(String[] tableNames, String result, String[] parts) throws SQLException {
+        String selectedTableName = null;
+        FindProperties findProperties = new FindProperties();
+        TablePresenter tablePresenter = new TablePresenter();
+        for (String tableName : tableNames) {
+            String expectedFirstCase = "find" + " " + tableName;
+            if (result.equals(expectedFirstCase)) {
+                selectedTableName = tableName;
+                break;
+            }
+
+        }
+        if (selectedTableName == null) {
+            selectedTableName = findProperties.getLimitOffset(tableNames, result, parts);
+            if (selectedTableName == null) {
+                System.out.println("Can not find table with this name. Try again");
+            } else {
+                tablePresenter.showTable(selectedTableName);
+            }
+        } else {
+            tablePresenter.showTable(selectedTableName);
+        }
+        return selectedTableName;
     }
 }

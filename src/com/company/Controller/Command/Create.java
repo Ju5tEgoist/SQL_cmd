@@ -2,8 +2,8 @@ package com.company.Controller.Command;
 
 import com.company.model.CreateTableQueryBuilder;
 import com.company.model.DatabaseManager;
-import com.company.model.DatabasePropertiesProvider;
-import com.company.view.ConsoleReader;
+import com.company.model.DatabaseProperties;
+import com.company.view.ScannerConsoleReader;
 
 import java.sql.SQLException;
 
@@ -24,14 +24,14 @@ public class Create extends AbstractCommand {
     }
 
     @Override
-    public void process(String command) throws SQLException, ClassNotFoundException {
-        DatabasePropertiesProvider databasePropertiesProvider = new DatabasePropertiesProvider();
-        String tableName = databasePropertiesProvider.getTableName();
+    public void execute(String command) throws SQLException, ClassNotFoundException {
+        DatabaseProperties databaseProperties = new DatabaseProperties();
+        String tableName = databaseProperties.getTableName();
         System.out.println("Please, type the number of columns");
-        ConsoleReader consoleReader = new ConsoleReader();
-        Integer columnNumber = Integer.valueOf(consoleReader.read());
+        ScannerConsoleReader scannerConsoleReader = new ScannerConsoleReader();
+        Integer columnNumber = Integer.valueOf(scannerConsoleReader.read());
         CreateTableQueryBuilder createTableQueryBuilder = new CreateTableQueryBuilder();
-        createTableQueryBuilder.queryBuildExecute(columnNumber, tableName);
+        createTableQueryBuilder.queryBuild(columnNumber, tableName);
         System.out.println(tableName + " was created");
     }
 }

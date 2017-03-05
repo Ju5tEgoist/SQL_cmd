@@ -8,17 +8,20 @@ import java.util.List;
  * Created by yulia on 22.02.17.
  */
 public class InsertTableQueryBuilder {
-    DatabaseManager databaseManager;
 
     public boolean queryBuilderExecute(String tableName, ResultSet rs) throws SQLException {
-        databaseManager = new DatabaseManager();
         InsertColumnDefinitionProvider insertColumnDefinitionProvider = new InsertColumnDefinitionProvider();
         List<InsertUpdateDeleteColumnDefinition> insertColumnDefinition = insertColumnDefinitionProvider.getProperties(rs);
         String propertiesValue = getPropertiesValue(rs, insertColumnDefinition);
         String propertiesColumn = getPropertiesColumn(rs, insertColumnDefinition);
         String sql = "INSERT INTO public." + tableName + " " + "(" + propertiesColumn + ")" + " " + "VALUES" + " " + "(" + propertiesValue + ")";
-        databaseManager.getStatement().executeUpdate(sql);
+        queryExecute(sql);
         return true;
+    }
+
+    private void queryExecute(String sql) throws SQLException {
+        DatabaseManager databaseManager = new DatabaseManager();
+        databaseManager.getStatement().executeUpdate(sql);
     }
 
     private String getPropertiesValue(ResultSet rs, List<InsertUpdateDeleteColumnDefinition> insertColumnDefinition) throws SQLException {

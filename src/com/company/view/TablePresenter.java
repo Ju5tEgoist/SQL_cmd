@@ -11,7 +11,7 @@ import java.sql.SQLException;
 /**
  * Created by yulia on 02.03.17.
  */
-public class TablePresentation {
+public class TablePresenter {
 
     public void showTable(String selectedTableName) throws SQLException {
         FindProperties findProperties = new FindProperties();

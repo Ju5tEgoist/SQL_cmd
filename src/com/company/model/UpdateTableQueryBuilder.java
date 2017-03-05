@@ -8,9 +8,8 @@ import java.util.List;
  * Created by yulia on 23.02.17.
  */
 public class UpdateTableQueryBuilder {
-    DatabaseManager databaseManager;
-    public boolean queryBuilder(String tableName, ResultSet rs, int columnNumber) throws SQLException {
-        databaseManager = new DatabaseManager();
+
+    public boolean queryBuild(String tableName, ResultSet rs, int columnNumber) throws SQLException {
         UpdateProvider updateProvider = new UpdateProvider();
         List<InsertUpdateDeleteColumnDefinition> updateColumnDefinition = updateProvider.getProperties(rs);
         String propertiesColumn = getColumnName(updateColumnDefinition, columnNumber);
@@ -19,8 +18,13 @@ public class UpdateTableQueryBuilder {
         String propertiesNeighbourValue = getValue(updateColumnDefinition, getNeighborColumnNumber(columnNumber));
         String sql = "UPDATE public." + tableName + " " + "SET" + " " + propertiesColumn + " " + "=" + " "
                 + propertiesValue + " " + "WHERE" + " " + propertiesNeighbourColumn + " " + "=" + propertiesNeighbourValue ;
-        databaseManager.getStatement().executeUpdate(sql);
+        queryExecute(sql);
         return true;
+    }
+
+    private void queryExecute(String sql) throws SQLException {
+        DatabaseManager databaseManager = new DatabaseManager();
+        databaseManager.getStatement().executeUpdate(sql);
     }
 
     private String getValue( List<InsertUpdateDeleteColumnDefinition> updateColumnDefinition, int columnNumber) {

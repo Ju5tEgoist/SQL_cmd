@@ -7,5 +7,5 @@ import java.sql.SQLException;
  */
 public interface Command {
     boolean shouldProcess(String command);
-    void process(String command)throws SQLException, ClassNotFoundException;
+    void execute(String command)throws SQLException, ClassNotFoundException;
 }

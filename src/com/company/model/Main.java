@@ -10,19 +10,15 @@ import java.sql.SQLException;
 public class Main {
 
     public static void main(String[] args)  {
-            Main main = new Main();
-            main.welcomeDatabase();
-    }
-
-    public boolean welcomeDatabase()  {
         System.out.println("Hi, I'm Database manager! ");
         MainCommand mainCommand = new MainCommand();
         try {
-            mainCommand.doCommand();
+            mainCommand.perform();
         }
         catch (SQLException | ClassNotFoundException e){
             System.out.println(e);
         }
-        return true;
     }
+
+
 }

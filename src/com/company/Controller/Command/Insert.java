@@ -1,6 +1,6 @@
 package com.company.Controller.Command;
 
-import com.company.model.DatabasePropertiesProvider;
+import com.company.model.DatabaseProperties;
 import com.company.model.DatabaseManager;
 import com.company.model.InsertTableQueryBuilder;
 
@@ -25,9 +25,9 @@ public class Insert extends AbstractCommand {
     }
 
     @Override
-    public void process(String command) throws SQLException, ClassNotFoundException {
-        DatabasePropertiesProvider databasePropertiesProvider = new DatabasePropertiesProvider();
-        String tableName = databasePropertiesProvider.getTableName();
+    public void execute(String command) throws SQLException, ClassNotFoundException {
+        DatabaseProperties databaseProperties = new DatabaseProperties();
+        String tableName = databaseProperties.getTableName();
         ResultSet rs = getDatabaseManager().getStatement().executeQuery("SELECT * FROM public." + tableName);
         InsertTableQueryBuilder insertTableQueryBuilder = new InsertTableQueryBuilder();
         insertTableQueryBuilder.queryBuilderExecute(tableName, rs);

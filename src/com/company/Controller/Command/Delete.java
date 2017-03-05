@@ -1,11 +1,12 @@
 package com.company.Controller.Command;
 
-import com.company.model.DatabasePropertiesProvider;
+import com.company.model.DatabaseProperties;
 import com.company.model.DatabaseManager;
 import com.company.model.DeleteTableQueryBuilder;
-import com.company.view.TablePresentation;
+import com.company.view.TablePresenter;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 /**
@@ -26,25 +27,23 @@ public class Delete extends AbstractCommand {
     }
 
     @Override
-    public void process(String command) throws SQLException, ClassNotFoundException {
-        TablePresentation tablePresentation = new TablePresentation();
-        DatabasePropertiesProvider databasePropertiesProvider = new DatabasePropertiesProvider();
-        String tableName = databasePropertiesProvider.getTableName();
-        columnsPresentation(tableName);
-        tablePresentation.showTable(tableName);
+    public void execute(String command) throws SQLException, ClassNotFoundException {
+        TablePresenter tablePresenter = new TablePresenter();
+        DatabaseProperties databaseProperties = new DatabaseProperties();
+        String tableName = databaseProperties.getTableName();
+        showColumns(tableName);
+        tablePresenter.showTable(tableName);
         DeleteTableQueryBuilder updateTableQueryBuilder = new DeleteTableQueryBuilder();
-        updateTableQueryBuilder.queryBuilder(tableName);
-        tablePresentation.showTable(tableName);
+        updateTableQueryBuilder.queryBuild(tableName);
+        tablePresenter.showTable(tableName);
     }
 
-    private void columnsPresentation(String tableName) throws SQLException {
+    private void showColumns(String tableName) throws SQLException {
         System.out.println("This table: ");
         ResultSet rs = getDatabaseManager().getStatement().executeQuery("SELECT * FROM public." + tableName);
-        for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-            if(i == 1){
-                System.out.print(rs.getMetaData().getColumnName(i));
-            }
-            else { System.out.println( "|" + rs.getMetaData().getColumnName(i)); }
+        ResultSetMetaData metaData = rs.getMetaData();
+        for (int i = 1; i <= metaData.getColumnCount(); i++) {
+            System.out.print(i > 1 ? "|" + metaData.getColumnName(i) : metaData.getColumnName(i));
         }
     }
 }

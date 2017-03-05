@@ -1,6 +1,6 @@
 package com.company.model;
 
-import com.company.view.ConsoleReader;
+import com.company.view.ScannerConsoleReader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,12 +12,12 @@ import java.util.List;
 public class InsertColumnDefinitionProvider {
     public List getProperties( ResultSet rs) throws SQLException {
         List<InsertUpdateDeleteColumnDefinition> insertColumnDefinitions = new ArrayList<>();
-        DatabasePropertiesProvider databasePropertiesProvider = new DatabasePropertiesProvider();
-        System.out.println("All column's names in this table: " + databasePropertiesProvider.getAllColumnsNames(rs));
+        DatabaseProperties databaseProperties = new DatabaseProperties();
+        System.out.println("All column's names in this table: " + databaseProperties.getAllColumnsNames(rs));
         for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
             System.out.println("Now enter column's name and value: <name/value>");
-            ConsoleReader consoleReader = new ConsoleReader();
-            String[] inputParts = consoleReader.read().split("/");
+            ScannerConsoleReader scannerConsoleReader = new ScannerConsoleReader();
+            String[] inputParts = scannerConsoleReader.read().split("/");
             InsertUpdateDeleteColumnDefinition insertColumnDefinition = InsertUpdateDeleteColumnDefinition.builder()
                     .name(inputParts[0])
                     .value(inputParts[1])

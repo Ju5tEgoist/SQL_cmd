@@ -11,9 +11,7 @@ public class Exit extends AbstractCommand {
     }
 
     @Override
-    public void process(String command){
+    public void execute(String command){
         throw new ExitException();
     }
-
-
 }

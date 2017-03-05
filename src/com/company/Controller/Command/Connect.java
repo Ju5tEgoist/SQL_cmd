@@ -2,7 +2,6 @@ package com.company.Controller.Command;
 
 import com.company.model.DatabaseManager;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
@@ -21,12 +20,12 @@ public class Connect extends AbstractCommand {
     }
 
     @Override
-    public void process(String command) throws SQLException, ClassNotFoundException {
-        boolean result = false;
+    public void execute(String command) throws SQLException, ClassNotFoundException {
+        boolean connectionSuccessful = false;
         System.out.println("Please, write name of database in which you want to work, username and password in format: nameOfDataBase|username|password ");
-        while (!result) {
+        while (!connectionSuccessful) {
             try {
-                result = isResult();
+                connectionSuccessful = isConnectionSuccessful();
             } catch (Exception e) {
                 System.out.println(e.toString());
                 System.out.println("Check your entries and try again");
@@ -35,11 +34,7 @@ public class Connect extends AbstractCommand {
 
     }
 
-    public boolean isResult() {
-        Connection connection = DatabaseManager.getConnection();
-        boolean result;
-        result = connection != null;
-        return result;
+    public boolean isConnectionSuccessful() {
+        return DatabaseManager.getConnection() != null ;
     }
-
 }

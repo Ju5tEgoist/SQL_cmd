@@ -2,14 +2,12 @@ package com.company;
 
 import com.company.model.*;
 import com.company.view.CustomInputStream;
-import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,12 +37,14 @@ public class ProcessTest {
     }
     @After
     public void cleanUp() throws SQLException, ClassNotFoundException {
-        DatabaseManager.connect("sqlcmd", "postgres", "yes");
+        in.add("sqlcmd|postgres|yes");
+        DatabaseManager.getConnection();
         databaseManager.getStatement().executeUpdate("DROP TABLE IF EXISTS public." + TABLE_NAME);
     }
     @Test
     public void shouldConnect() throws SQLException, ClassNotFoundException {
-        assertNotNull(DatabaseManager.connect("sqlcmd", "postgres", "yes"));
+        in.add("sqlcmd|postgres|yes");
+        assertNotNull(DatabaseManager.getConnection());
     }
     @Test
     public void shouldShowTableNameLimitOffset(){
@@ -64,8 +64,8 @@ public class ProcessTest {
         String result = "find first";
         String[] parts = result.split(" ") ;
         String[] expectedTableNames = {"employee", "first", "hi", "test", "testr", "today", "todaynew", "todaynewsmth", "tt"};
-        FindProvider findProvider = new FindProvider();
-        assertEquals("first", findProvider.getSelectedTableName(expectedTableNames, result, parts, "first"));
+        FindProperties findProperties = new FindProperties();
+        assertEquals("first", findProperties.getSelectedTableName(expectedTableNames, result, parts));
     }
 
     @Test
@@ -83,7 +83,7 @@ public class ProcessTest {
         in.add("name/text");
         Statement statement = DatabaseManager.getConnection().createStatement();
         CreateTableQueryBuilder createTableQueryBuilder = new CreateTableQueryBuilder();
-        assertTrue(createTableQueryBuilder.queryBuildExecute(1, TABLE_NAME));
+        assertTrue(createTableQueryBuilder.queryBuild(1, TABLE_NAME));
     }
     @Test
     public void shouldGetPropertiesInsert() throws SQLException {
@@ -116,8 +116,8 @@ public class ProcessTest {
                     .build();
             createColumnDefinitions.add(createColumnDefinition);
         }
-        CreateColumnDefinitionProvider createColumnDefinitionProvider = new CreateColumnDefinitionProvider();
-        assertTrue(EqualsBuilder.reflectionEquals(createColumnDefinitions, createColumnDefinitionProvider.getProperties(1)));
+        CreateColumnDefinitionPropertiesProvider createColumnDefinitionPropertiesProvider = new CreateColumnDefinitionPropertiesProvider();
+        assertTrue(EqualsBuilder.reflectionEquals(createColumnDefinitions, createColumnDefinitionPropertiesProvider.getProperties(1)));
     }
     @Test
     public void shouldBuildExecuteQueryInsert() throws SQLException {
@@ -139,8 +139,8 @@ public class ProcessTest {
                 .value("Test")
                 .build();
         deleteColumnDefinitions.add(deleteDeleteColumnDefinition);
-        DeleteProvider deleteProvider = new DeleteProvider();
-        assertTrue(EqualsBuilder.reflectionEquals(deleteColumnDefinitions, deleteProvider.getProperties()));
+        DeleteColumnDefinitionProvider deleteColumnDefinitionProvider = new DeleteColumnDefinitionProvider();
+        assertTrue(EqualsBuilder.reflectionEquals(deleteColumnDefinitions, deleteColumnDefinitionProvider.getProperties()));
     }
     @Test
     public void shouldBuildExecuteQueryDelete() throws SQLException {
@@ -150,7 +150,7 @@ public class ProcessTest {
         Statement statement = DatabaseManager.getConnection().createStatement();
 
         DeleteTableQueryBuilder deleteTableQueryBuilder = new DeleteTableQueryBuilder();
-        assertTrue(deleteTableQueryBuilder.queryBuilder("first"));
+        assertTrue(deleteTableQueryBuilder.queryBuild("first"));
     }
     @Test
     public void shouldGetPropertiesUpdate() throws SQLException {
@@ -180,6 +180,6 @@ public class ProcessTest {
         Statement statement = DatabaseManager.getConnection().createStatement();
         ResultSet rs = statement.executeQuery("SELECT * FROM public." + "first");
         UpdateTableQueryBuilder updateTableQueryBuilder = new UpdateTableQueryBuilder();
-        assertTrue(updateTableQueryBuilder.queryBuilder("first", rs, 2));
+        assertTrue(updateTableQueryBuilder.queryBuild("first", rs, 2));
     }
 }
