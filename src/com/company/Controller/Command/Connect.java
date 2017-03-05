@@ -33,7 +33,7 @@ public class Connect extends AbstractCommand {
         }
 
     }
-
+///home/yulia/IdeaProjects/SQL_cmd
     public boolean isConnectionSuccessful() {
         return DatabaseManager.getConnection() != null ;
     }
