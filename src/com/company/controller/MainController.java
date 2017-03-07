@@ -2,23 +2,25 @@ package com.company.controller;
 
 import com.company.controller.command.*;
 import com.company.model.exception.CommandExecutionException;
-import com.company.view.ScannerConsoleReader;
+import com.company.view.ConsoleManager;
+import com.company.view.View;
 
 import java.sql.SQLException;
 
 /**
  * Created by yulia on 06.11.16.
  */
-public class MainCommand {
+public class MainController {
+
+    View view = new ConsoleManager();
 
     public void perform() throws CommandExecutionException, SQLException {
-        System.out.println( "Enter the command, which you want to do or 'help'");
+        view.write( "Enter the command, which you want to do or 'help'");
         getCommand();
     }
 
     public void getCommand() throws CommandExecutionException, SQLException {
-        ScannerConsoleReader scannerConsoleReader = new ScannerConsoleReader();
-        String inputCommand = scannerConsoleReader.read();
+        String inputCommand = view.read();
         boolean isCorrectCommand = false;
         Command[] commands = {
                 new Help(),
@@ -42,9 +44,9 @@ public class MainCommand {
             }
         }
         if(!isCorrectCommand){
-            System.out.println("Invalid command! Please try again.");
+            view.write("Invalid command! Please try again.");
         }
-        System.out.println( "Enter the command, which you want to do or 'help'");
+        view.write( "Enter the command, which you want to do or 'help'");
             getCommand();
     }
 }

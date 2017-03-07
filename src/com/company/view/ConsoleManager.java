@@ -7,7 +7,7 @@ import java.util.Scanner;
 /**
  * Created by yulia on 13.10.16.
  */
-public class ScannerConsoleReader implements ConsoleReader {
+public class ConsoleManager implements View {
     @Override
     public String read() {
         Scanner sc = new Scanner(System.in);
@@ -19,5 +19,10 @@ public class ScannerConsoleReader implements ConsoleReader {
             return null;
         }
         return input;
+    }
+
+    @Override
+    public void write(String massage) {
+        System.out.println(massage);
     }
 }

@@ -4,6 +4,8 @@ import com.company.controller.query.builder.InsertTableQueryBuilder;
 import com.company.controller.query.executor.UpdateSqlQueryExecutor;
 import com.company.controller.query.parameter.provider.ClearParametersProvider;
 import com.company.model.exception.CommandExecutionException;
+import com.company.view.ConsoleManager;
+import com.company.view.View;
 
 /**
  * Created by yulia on 21.02.17.
@@ -22,6 +24,7 @@ public class Insert extends AbstractCommand {
     @Override
     public void execute() throws CommandExecutionException {
         super.execute();
-        System.out.println("Your data were added");
+        View view = new ConsoleManager();
+        view.write("Your data were added");
     }
 }

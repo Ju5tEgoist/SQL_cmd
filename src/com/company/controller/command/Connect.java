@@ -4,6 +4,8 @@ import com.company.controller.query.parameter.ConnectParameters;
 import com.company.controller.query.parameter.provider.ConnectParametersProvider;
 import com.company.model.DatabaseManager;
 import com.company.model.exception.CommandExecutionException;
+import com.company.view.ConsoleManager;
+import com.company.view.View;
 
 /**
  * Created by yulia on 06.11.16.
@@ -22,14 +24,15 @@ public class Connect implements Command {
 
     @Override
     public void execute() throws CommandExecutionException {
+        View view = new ConsoleManager();
         ConnectParameters parameters = parametersProvider.getParameters();
         boolean connectionSuccessful = false;
         while (!connectionSuccessful) {
             try {
                 connectionSuccessful = DatabaseManager.connect(parameters.getDatabase(), parameters.getUserName(), parameters.getPassword()) != null;
             } catch (Exception e) {
-                System.out.println(e.toString());
-                System.out.println("Check your entries and try again");
+                view.write(e.toString());
+                view.write("Check your entries and try again");
             }
         }
 

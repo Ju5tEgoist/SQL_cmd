@@ -18,8 +18,7 @@ public class CreateQueryBuilder implements QueryBuilder<CreateParameters>{
         List<CreateColumnDefinition> columnDefinition = columnDefinitionProvider.getProperties(createParameters.getColumnNumber());
         properties = getProperties(properties, columnDefinition);
         ClearParametersProvider clearParametersProvider = new ClearParametersProvider();
-        String sql = "CREATE TABLE " + clearParametersProvider.getParameters().getTableName() + "(" + properties + ")";
-        return sql;
+        return "CREATE TABLE " + clearParametersProvider.getParameters().getTableName() + "(" + properties + ")";
     }
 
     private String getProperties(String properties, List<CreateColumnDefinition> columnDefinition) {

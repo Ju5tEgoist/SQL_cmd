@@ -1,7 +1,9 @@
 package com.company.model;
 
 
+import com.company.view.ConsoleManager;
 import com.company.view.TablePresenter;
+import com.company.view.View;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -57,6 +59,7 @@ public class FindProperties {
     }
 
     public String getSelectedTableName(String[] tableNames, String result, String[] parts) throws SQLException {
+        View view = new ConsoleManager();
         String selectedTableName = null;
         FindProperties findProperties = new FindProperties();
         TablePresenter tablePresenter = new TablePresenter();
@@ -71,7 +74,7 @@ public class FindProperties {
         if (selectedTableName == null) {
             selectedTableName = findProperties.getLimitOffset(tableNames, result, parts);
             if (selectedTableName == null) {
-                System.out.println("Can not find table with this name. Try again");
+                view.write("Can not find table with this name. Try again");
             } else {
                 tablePresenter.showTable(selectedTableName);
             }

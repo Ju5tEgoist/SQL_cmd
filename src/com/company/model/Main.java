@@ -1,7 +1,9 @@
 package com.company.model;
 
-import com.company.controller.MainCommand;
+import com.company.controller.MainController;
 import com.company.model.exception.CommandExecutionException;
+import com.company.view.ConsoleManager;
+import com.company.view.View;
 
 import java.sql.SQLException;
 
@@ -11,13 +13,14 @@ import java.sql.SQLException;
 public class Main {
 
     public static void main(String[] args)  {
-        System.out.println("Hi, I'm Database manager! ");
-        MainCommand mainCommand = new MainCommand();
+        View view = new ConsoleManager();
+        view.write("Hi, I'm Database manager! ");
+        MainController mainController = new MainController();
         try {
-            mainCommand.perform();
+            mainController.perform();
         }
         catch (CommandExecutionException | SQLException e){
-            System.out.println(e);
+            view.write(e.toString());
         }
     }
 

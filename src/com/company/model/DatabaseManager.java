@@ -1,6 +1,7 @@
 package com.company.model;
 
-import com.company.view.ScannerConsoleReader;
+import com.company.view.ConsoleManager;
+import com.company.view.View;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,7 +16,7 @@ public class DatabaseManager {
     private static Statement stmt;
 
     public static Connection connect(String database, String user, String password) throws SQLException {
-
+        View view = new ConsoleManager();
             try {
                 Class.forName("org.postgresql.Driver");
             } catch (ClassNotFoundException e) {
@@ -32,7 +33,7 @@ public class DatabaseManager {
                         e);
 
             }
-            System.out.println("Connection successful");
+            view.write("Connection successful");
 
         stmt = connection.createStatement();
         return connection;
@@ -43,10 +44,10 @@ public class DatabaseManager {
     }
 
     public static Connection getConnection()  {
+        View view = new ConsoleManager();
         if(connection == null) {
             try {
-                ScannerConsoleReader scannerConsoleReader = new ScannerConsoleReader();
-                String string = scannerConsoleReader.read();
+                String string = view.read();
                 String[] data = string.split("\\|");
                 if (data.length != 3) {
                     throw new IllegalArgumentException("Wrong parameters number. Your number is " + data.length + " But must be 3");
@@ -57,7 +58,7 @@ public class DatabaseManager {
                 connection = connect(database, userName, password);
             }
             catch (SQLException e){
-                System.out.println(e);
+                view.write(e.toString());
             }
 
         }

@@ -3,8 +3,9 @@ package com.company.controller.command;
 import com.company.controller.query.builder.UpdateTableQueryBuilder;
 import com.company.controller.query.parameter.provider.ClearParametersProvider;
 import com.company.model.DatabaseManager;
-import com.company.view.ScannerConsoleReader;
+import com.company.view.ConsoleManager;
 import com.company.view.TablePresenter;
+import com.company.view.View;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +14,8 @@ import java.sql.SQLException;
  * Created by yulia on 21.02.17.
  */
 public class Update implements Command {
+
+    View view = new ConsoleManager();
 
     @Override
     public boolean shouldExecute(String command) {
@@ -23,19 +26,17 @@ public class Update implements Command {
     public void execute() throws SQLException {
         String tableName = new ClearParametersProvider().getParameters().getTableName();
         TablePresenter tablePresenter = new TablePresenter();
-        System.out.println("This table: ");
+        view.write("This table: ");
         ResultSet rs = getResultSet(tableName);
         tablePresenter.showTable(tableName);
-        int columnNumber = getColumnNumber();
         UpdateTableQueryBuilder updateTableQueryBuilder = new UpdateTableQueryBuilder();
-        updateTableQueryBuilder.queryBuild(tableName, rs, columnNumber);
+        updateTableQueryBuilder.build(tableName, rs, getColumnNumber());
         tablePresenter.showTable(tableName);
     }
 
     private int getColumnNumber() {
-        System.out.println("Now enter the column number in which you want change value");
-        ScannerConsoleReader scannerConsoleReader = new ScannerConsoleReader();
-        return Integer.valueOf(scannerConsoleReader.read());
+        view.write("Now enter the column number in which you want change value");
+        return Integer.valueOf(view.read());
     }
 
     private ResultSet getResultSet(String tableName) throws SQLException {

@@ -9,8 +9,8 @@ public class ClearParametersProvider extends ConsoleParametersProvider {
     @Override
     public Parameters getParameters() {
         Parameters parameters = new Parameters();
-        System.out.println("Enter table name");
-        parameters.setTableName("public." + getConsoleInput());
+        view.write("Enter table name");
+        parameters.setTableName("public." + view.read());
         return parameters;
     }
 }

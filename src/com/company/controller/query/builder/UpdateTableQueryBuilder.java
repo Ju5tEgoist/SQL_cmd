@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class UpdateTableQueryBuilder {
 
-    public String queryBuild(String tableName, ResultSet rs, int columnNumber) throws SQLException {
+    public String build(String tableName, ResultSet rs, int columnNumber) throws SQLException {
         UpdateProvider updateProvider = new UpdateProvider();
         List<InsertUpdateDeleteColumnDefinition> updateColumnDefinition = updateProvider.getProperties(rs);
         String propertiesColumn = getColumnName(updateColumnDefinition, columnNumber);

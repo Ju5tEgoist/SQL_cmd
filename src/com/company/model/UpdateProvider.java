@@ -1,6 +1,7 @@
 package com.company.model;
 
-import com.company.view.ScannerConsoleReader;
+import com.company.view.ConsoleManager;
+import com.company.view.View;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,12 +13,11 @@ import java.util.List;
  */
 public class UpdateProvider {
     public List getProperties( ResultSet rs) throws SQLException {
-
         List<InsertUpdateDeleteColumnDefinition> updateDeleteColumnDefinitions = new ArrayList<>();
-        ScannerConsoleReader scannerConsoleReader = new ScannerConsoleReader();
+        View view = new ConsoleManager();
         for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-            System.out.println("Now enter column's name and value: <name/value>. For column which changes type new value");
-            String[] inputParts = scannerConsoleReader.read().split("/");
+            view.write("Now enter column's name and value: <name/value>. For column which changes type new value");
+            String[] inputParts = view.read().split("/");
             InsertUpdateDeleteColumnDefinition updateDeleteColumnDefinition = InsertUpdateDeleteColumnDefinition.builder()
                     .name(inputParts[0])
                     .value(inputParts[1])

@@ -9,9 +9,9 @@ import com.company.controller.query.parameter.Parameters;
 public class CreateParametersProvider extends ConsoleParametersProvider {
     @Override
     public Parameters getParameters() {
-        System.out.println("Please, type the number of columns");
+        view.write("Please, type the number of columns");
         CreateParameters createParameters = new CreateParameters();
-        createParameters.setColumnNumber(Integer.valueOf(getConsoleInput()));
+        createParameters.setColumnNumber(Integer.valueOf(view.read()));
         return createParameters;
     }
 }

@@ -9,12 +9,12 @@ public class ConnectParametersProvider extends ConsoleParametersProvider {
     @Override
     public ConnectParameters getParameters() {
         ConnectParameters parameters = new ConnectParameters();
-        System.out.println("Please enter database name:");
-        parameters.setDatabase(getConsoleInput());
-        System.out.println("Please enter user name:");
-        parameters.setUserName(getConsoleInput());
-        System.out.println("Please enter password:");
-        parameters.setPassword(getConsoleInput());
+        view.write("Please enter database name:");
+        parameters.setDatabase(view.read());
+        view.write("Please enter user name:");
+        parameters.setUserName(view.read());
+        view.write("Please enter password:");
+        parameters.setPassword(view.read());
         return parameters;
     }
 }

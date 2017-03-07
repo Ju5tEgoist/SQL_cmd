@@ -10,6 +10,8 @@ import java.sql.*;
  */
 public class TablePresenter {
 
+    View view = new ConsoleManager();
+
     public void showTable(String selectedTableName) throws SQLException {
         FindProperties findProperties = new FindProperties();
         Connection connection = DatabaseManager.getConnection();
@@ -28,19 +30,19 @@ public class TablePresenter {
 
         while (rs.next()) {
             for (int i = 1; i <= columnCount; i++) {
-                System.out.print(rs.getString(i) + "|");
+                view.write(rs.getString(i) + "|");
             }
             System.out.print("\n");
         }
     }
 
     public void showColumns(String tableName) throws SQLException {
-        System.out.println("This table: ");
+        view.write("This table: ");
         ResultSet rs = new DatabaseManager().getStatement().executeQuery("SELECT * FROM " + tableName);
         ResultSetMetaData metaData = rs.getMetaData();
         for (int i = 1; i <= metaData.getColumnCount(); i++) {
             System.out.print(i > 1 ? "|" + metaData.getColumnName(i) : metaData.getColumnName(i));
         }
-        System.out.println("\n");
+        view.write("\n");
     }
 }

@@ -5,6 +5,8 @@ import com.company.controller.query.executor.UpdateSqlQueryExecutor;
 import com.company.controller.query.parameter.Parameters;
 import com.company.controller.query.parameter.provider.ClearParametersProvider;
 import com.company.model.exception.CommandExecutionException;
+import com.company.view.ConsoleManager;
+import com.company.view.View;
 
 /**
  * Created by yulia on 21.02.17.
@@ -23,7 +25,8 @@ public class Drop extends AbstractCommand {
     @Override
     public void execute() throws CommandExecutionException {
         super.execute();
+        View view = new ConsoleManager();
         Parameters parameters = new Parameters();
-        System.out.println(parameters.getTableName() + " is dropped");
+        view.write(parameters.getTableName() + " is dropped");
     }
 }
